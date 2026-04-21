@@ -1,0 +1,704 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Amaury Baret — PhD candidate in condensed-matter physics, University of Liège. Research in stochastic media, nanowire networks, and computational physics.">
+  <title>Amaury Baret — PhD Candidate, University of Liège</title>
+  <link rel="stylesheet" href="assets/css/portfolio.css">
+</head>
+<body id="top">
+
+<!--
+  ─────────────────────────────────────────────────────────────
+  Portfolio — single-page scholarly site.
+  Ordering (research-first):
+    Nav → Hero → News → Education → Research (Venn)
+      → Publications → Talks → Teaching → Awards → Industry
+      → Contact + CV (footer)
+  All interactive behaviour lives in /assets/js/portfolio.js —
+  this file stays semantic HTML so Jekyll processes it cleanly
+  and search engines index it.
+  ─────────────────────────────────────────────────────────────
+-->
+
+<div id="portfolio-root">
+
+<!-- ── NAV ─────────────────────────────────────────────────── -->
+<header class="pf-nav" role="banner">
+  <div class="pf-container pf-nav__row">
+    <a href="#top" class="pf-nav__brand">
+      <span class="pf-nav__name">Amaury Baret</span>
+      <span class="pf-nav__role">PhD cand. · ULiège</span>
+    </a>
+    <nav class="pf-nav__links" aria-label="Primary">
+      <a href="#about">About</a>
+      <a href="#research">Research</a>
+      <a href="#publications">Publications</a>
+      <a href="#talks">Talks</a>
+      <a href="#teaching">Teaching</a>
+      <a href="#contact">Contact</a>
+    </nav>
+    <a href="#cv" class="pf-btn pf-btn--ghost">CV (PDF)</a>
+  </div>
+</header>
+
+<!-- ── HERO ────────────────────────────────────────────────── -->
+<section id="about" class="pf-section pf-hero" aria-labelledby="hero-name">
+  <div class="pf-hero__grid" aria-hidden="true"></div>
+  <div class="pf-hero__glow" aria-hidden="true"></div>
+  <div class="pf-container pf-hero__inner">
+    <div class="pf-meta">
+      <span class="pf-meta__dash"></span>
+      <span class="pf-smallcaps">Personal Site</span>
+      <span class="pf-dot">·</span>
+      <span class="pf-smallcaps">Updated April 2026</span>
+    </div>
+
+    <h1 id="hero-name" class="pf-hero__name">Amaury Baret</h1>
+    <p class="pf-hero__title">
+      <em>PhD candidate in condensed-matter physics</em>, Department of Physics, University of Liège.
+    </p>
+
+    <div class="pf-hrule pf-hrule--max3xl"></div>
+
+    <div class="pf-hero__body">
+      <p class="pf-hero__statement">
+        I study <span class="pf-ink--research">stochastic media</span> and the physics of
+        energy-management surfaces — in particular, transport and optical response in
+        disordered metallic nanowire networks used for spectrally selective coatings and
+        radiative cooling. My work pairs theoretical models of percolation and Mie
+        scattering with large-scale numerical simulation on high-performance clusters.
+      </p>
+
+      <aside class="pf-affil">
+        <div class="pf-affil__row">
+          <div class="pf-affil__label pf-smallcaps">Laboratory</div>
+          <div class="pf-affil__val pf-affil__val--serif">GREΘA — Group for Research on Energy &amp; Thermal Applications</div>
+        </div>
+        <div class="pf-affil__row">
+          <div class="pf-affil__label pf-smallcaps">Supervisor</div>
+          <div class="pf-affil__val pf-affil__val--serif">Prof. J.-Y. Dauphin</div>
+        </div>
+        <div class="pf-affil__row">
+          <div class="pf-affil__label pf-smallcaps">Affiliations</div>
+          <div class="pf-affil__val pf-affil__val--serif">University of Liège · CESAM Institute</div>
+        </div>
+        <!-- Education line: a concise above-the-fold summary of the two degrees. -->
+        <div class="pf-affil__row">
+          <div class="pf-affil__label pf-smallcaps">Education</div>
+          <div class="pf-affil__val pf-affil__val--serif">
+            MSc Condensed Matter Physics (<em>summa cum laude</em>, 2022) · BSc Physics (<em>magna cum laude</em>, 2020)
+          </div>
+        </div>
+        <div class="pf-affil__row">
+          <div class="pf-affil__label pf-smallcaps">Orcid</div>
+          <div class="pf-affil__val pf-affil__val--mono">0000-0002-1234-5678</div>
+        </div>
+        <div class="pf-affil__row">
+          <div class="pf-affil__label pf-smallcaps">Email</div>
+          <div class="pf-affil__val pf-affil__val--mono">amaury.baret@uliege.be</div>
+        </div>
+      </aside>
+    </div>
+
+    <p class="pf-hero__cta">
+      <a href="#publications">Publications</a><span class="pf-dot">·</span>
+      <a href="#research">Research interests</a><span class="pf-dot">·</span>
+      <a href="#education">Education</a><span class="pf-dot">·</span>
+      <a href="#cv">Curriculum vitæ</a><span class="pf-dot">·</span>
+      <a href="#contact">Contact</a>
+    </p>
+  </div>
+</section>
+
+<!-- ── NEWS ────────────────────────────────────────────────── -->
+<section class="pf-section" aria-labelledby="news-h">
+  <div class="pf-container pf-split">
+    <div class="pf-split__head">
+      <div class="pf-smallcaps pf-label">§ Recent activity</div>
+      <h2 id="news-h" class="pf-h2">News from the lab <em class="pf-ink--mute">&amp;</em> the desk.</h2>
+      <p class="pf-lede">Talks, preprints, and releases in reverse chronological order. Full archive is on the publications page.</p>
+    </div>
+    <ul class="pf-split__body pf-list pf-list--rule">
+      <li class="pf-row">
+        <div class="pf-row__date pf-smallcaps">Apr 2026</div>
+        <div class="pf-row__tag">Talk</div>
+        <div class="pf-row__body">Invited talk at the E-MRS Spring Meeting: percolation in disordered nanowire networks.</div>
+      </li>
+      <li class="pf-row">
+        <div class="pf-row__date pf-smallcaps">Mar 2026</div>
+        <div class="pf-row__tag">Preprint</div>
+        <div class="pf-row__body">New manuscript on arXiv — anomalous transport in 1D stochastic conduits (w/ Chen &amp; Laurent).</div>
+      </li>
+      <li class="pf-row">
+        <div class="pf-row__date pf-smallcaps">Jan 2026</div>
+        <div class="pf-row__tag">Award</div>
+        <div class="pf-row__body">Best poster, NeurIPS SciML workshop — Monte Carlo estimators for Mie scattering.</div>
+      </li>
+      <li class="pf-row">
+        <div class="pf-row__date pf-smallcaps">Nov 2025</div>
+        <div class="pf-row__tag">Code</div>
+        <div class="pf-row__body">Released <code>percolate-rs</code>, an open-source Rust port of our MPI charge-transport solver.</div>
+      </li>
+      <li class="pf-row">
+        <div class="pf-row__date pf-smallcaps">Sep 2025</div>
+        <div class="pf-row__tag">Publication</div>
+        <div class="pf-row__body">Paper accepted in <em>Physical Review B</em> on non-equilibrium conduction in random 1D conduits.</div>
+      </li>
+    </ul>
+  </div>
+</section>
+
+<!-- ── EDUCATION ───────────────────────────────────────────────
+  Added new section. Placed between News and Research so the
+  page flow reads:  now → formation → research → output.
+  Visual language mirrors the Awards two-column layout.
+  ──────────────────────────────────────────────────────────── -->
+<section id="education" class="pf-section" aria-labelledby="edu-h">
+  <div class="pf-container pf-split">
+    <div class="pf-split__head">
+      <div class="pf-smallcaps pf-label">§ Education</div>
+      <h2 id="edu-h" class="pf-h2">Degrees <em class="pf-ink--mute">&amp;</em> formation.</h2>
+      <p class="pf-lede">Graduate and undergraduate training in physics at the University of Liège.</p>
+    </div>
+
+    <ul class="pf-split__body pf-list pf-list--rule pf-list--wide">
+      <!-- Entries in reverse chronological order, matching News/Publications conventions. -->
+      <li class="pf-edu">
+        <div class="pf-edu__year pf-smallcaps">2020 – 2022</div>
+        <div class="pf-edu__main">
+          <div class="pf-edu__degree">
+            <span class="pf-edu__name">MSc in Condensed Matter Physics</span>
+            <span class="pf-edu__honor">— summa cum laude</span>
+          </div>
+          <div class="pf-edu__inst"><em>University of Liège</em> · Department of Physics</div>
+          <p class="pf-edu__note">
+            Specialisation in stochastic transport and numerical methods.
+            Master's thesis on percolation thresholds in random 1D conduit graphs (listed under Publications).
+          </p>
+        </div>
+      </li>
+
+      <li class="pf-edu">
+        <div class="pf-edu__year pf-smallcaps">2017 – 2020</div>
+        <div class="pf-edu__main">
+          <div class="pf-edu__degree">
+            <span class="pf-edu__name">BSc in Physics</span>
+            <span class="pf-edu__honor">— magna cum laude</span>
+          </div>
+          <div class="pf-edu__inst"><em>University of Liège</em> · Faculty of Sciences</div>
+          <p class="pf-edu__note">
+            Core curriculum in classical &amp; quantum mechanics, statistical physics,
+            electromagnetism, and mathematical methods.
+          </p>
+        </div>
+      </li>
+    </ul>
+  </div>
+</section>
+
+<!-- ── RESEARCH (VENN) ─────────────────────────────────────── -->
+<section id="venn" class="pf-section" aria-labelledby="venn-h">
+  <div class="pf-hero__glow pf-venn__glow--l" aria-hidden="true"></div>
+  <div class="pf-hero__glow pf-venn__glow--r" aria-hidden="true"></div>
+
+  <div id="research" class="pf-container pf-container--wide">
+    <div class="pf-split__head pf-split__head--row">
+      <div>
+        <div class="pf-smallcaps pf-label">§ Research interests</div>
+        <h2 id="venn-h" class="pf-h2 pf-h2--tight">Stochastic media <em class="pf-ink--mute">&amp;</em> computational physics.</h2>
+      </div>
+      <p class="pf-lede">Hover either side — or the intersection — to read the specific threads of my research programme and the computational methods that support it.</p>
+    </div>
+
+    <div class="pf-venn__legend">
+      <button class="pf-pill" data-side="L" type="button">
+        <span class="pf-pill__sw" style="background:#6a8ea0"></span> Stochastic media &amp; energy
+      </button>
+      <button class="pf-pill" data-side="C" type="button">
+        <span class="pf-pill__sw" style="background:#a89a87"></span> Intersection
+      </button>
+      <button class="pf-pill" data-side="R" type="button">
+        <span class="pf-pill__sw" style="background:#9a6450"></span> Computational physics &amp; methods
+      </button>
+      <span class="pf-venn__state">state: <span id="pf-venn-state">—</span></span>
+    </div>
+
+    <!-- Stage: left cards | diagram | right cards -->
+    <div class="pf-venn__stage" id="pf-venn-stage">
+      <div class="pf-venn__grid" aria-hidden="true"></div>
+      <div class="pf-venn__cap pf-venn__cap--tl pf-smallcaps">Fig. 1 — research venn</div>
+      <div class="pf-venn__cap pf-venn__cap--br">overlap ≈ 0.32</div>
+
+      <!-- Ribbons overlay (drawn by JS) -->
+      <svg class="pf-venn__ribbons" id="pf-venn-ribbons" aria-hidden="true"></svg>
+
+      <div class="pf-venn__row">
+        <!-- LEFT cards -->
+        <div class="pf-venn__col" data-side="L">
+          <article class="pf-card" data-id="L1" data-side="L">
+            <div class="pf-card__bar"><span class="pf-card__dot" style="background:#6a8ea0"></span><span class="pf-smallcaps">research · l1</span></div>
+            <div class="pf-card__body">
+              <h3 class="pf-card__title">Spectrally Selective &amp; Low-E Surfaces</h3>
+              <p>Emerging 1D-nanostructured coatings that gate IR emissivity while keeping visible transparency — next-gen smart windows.</p>
+              <div class="pf-pills">
+                <span class="pf-chip" data-c="L">thin films</span>
+                <span class="pf-chip" data-c="L">Mie theory</span>
+                <span class="pf-chip" data-c="L">FDTD</span>
+              </div>
+            </div>
+          </article>
+          <article class="pf-card" data-id="L2" data-side="L">
+            <div class="pf-card__bar"><span class="pf-card__dot" style="background:#6a8ea0"></span><span class="pf-smallcaps">research · l2</span></div>
+            <div class="pf-card__body">
+              <h3 class="pf-card__title">Materials for Energy &amp; Radiative Cooling</h3>
+              <p>Passive radiative cooling stacks and thermochromic layers for autonomous thermal regulation.</p>
+              <div class="pf-pills">
+                <span class="pf-chip" data-c="L">VO₂</span>
+                <span class="pf-chip" data-c="L">chalcogenides</span>
+                <span class="pf-chip" data-c="L">simulation</span>
+              </div>
+            </div>
+          </article>
+          <article class="pf-card" data-id="L3" data-side="L">
+            <div class="pf-card__bar"><span class="pf-card__dot" style="background:#6a8ea0"></span><span class="pf-smallcaps">research · l3</span></div>
+            <div class="pf-card__body">
+              <h3 class="pf-card__title">Metallic Nanowire Networks</h3>
+              <p>Percolation, Mie scattering, and non-equilibrium transport in random 1D conduits.</p>
+              <div class="pf-pills">
+                <span class="pf-chip" data-c="L">percolation</span>
+                <span class="pf-chip" data-c="L">graph theory</span>
+                <span class="pf-chip" data-c="L">DC sheet R</span>
+              </div>
+            </div>
+          </article>
+        </div>
+
+        <!-- CENTER diagram + intersection cards -->
+        <div class="pf-venn__center">
+          <div class="pf-venn__top">
+            <article class="pf-card pf-card--compact" data-id="C1" data-side="C">
+              <div class="pf-card__bar"><span class="pf-card__dot" style="background:#a89a87"></span><span class="pf-smallcaps">intersection · c1</span></div>
+              <div class="pf-card__body">
+                <h3 class="pf-card__title">Monte Carlo × materials</h3>
+                <p>Stochastic samplers coupled to PDE solvers — estimating emissivity, percolation thresholds, and rare events in one pass.</p>
+                <div class="pf-pills">
+                  <span class="pf-chip" data-c="C">MCMC</span>
+                  <span class="pf-chip" data-c="C">importance sampling</span>
+                </div>
+              </div>
+            </article>
+          </div>
+
+          <!-- SVG: two circles + intersection lens -->
+          <svg id="pf-venn-svg" viewBox="0 0 560 420" class="pf-venn__svg" aria-label="Two-circle Venn diagram of research and methods">
+            <defs>
+              <radialGradient id="pfLeftGrad"  cx="50%" cy="50%" r="50%">
+                <stop offset="0%"   stop-color="#6a8ea0" stop-opacity="0.45"/>
+                <stop offset="70%"  stop-color="#6a8ea0" stop-opacity="0.18"/>
+                <stop offset="100%" stop-color="#6a8ea0" stop-opacity="0.06"/>
+              </radialGradient>
+              <radialGradient id="pfRightGrad" cx="50%" cy="50%" r="50%">
+                <stop offset="0%"   stop-color="#9a6450" stop-opacity="0.45"/>
+                <stop offset="70%"  stop-color="#9a6450" stop-opacity="0.18"/>
+                <stop offset="100%" stop-color="#9a6450" stop-opacity="0.06"/>
+              </radialGradient>
+              <clipPath id="pfLensClip"><circle cx="220" cy="210" r="135"/></clipPath>
+            </defs>
+
+            <circle id="pf-venn-L" cx="220" cy="210" r="135"
+                    fill="url(#pfLeftGrad)" stroke="#6a8ea0" stroke-width="1" data-side="L"/>
+            <circle id="pf-venn-R" cx="340" cy="210" r="135"
+                    fill="url(#pfRightGrad)" stroke="#9a6450" stroke-width="1" data-side="R"/>
+
+            <g id="pf-venn-lens" clip-path="url(#pfLensClip)" opacity="0" style="pointer-events:none">
+              <circle cx="340" cy="210" r="135" fill="#a89a87" fill-opacity="0.32"/>
+            </g>
+
+            <!-- Intersection hit target -->
+            <ellipse cx="280" cy="210" rx="38" ry="95" fill="transparent" data-side="C" style="cursor:pointer"/>
+
+            <g pointer-events="none">
+              <text x="165" y="202" fill="#e8e6df" font-family="EB Garamond" font-size="19" font-style="italic" text-anchor="middle">Stochastic</text>
+              <text x="165" y="224" fill="#e8e6df" font-family="EB Garamond" font-size="19" font-style="italic" text-anchor="middle">media &amp;</text>
+              <text x="165" y="246" fill="#e8e6df" font-family="EB Garamond" font-size="19" font-style="italic" text-anchor="middle">energy</text>
+
+              <text x="395" y="202" fill="#e8e6df" font-family="EB Garamond" font-size="19" font-style="italic" text-anchor="middle">Computational</text>
+              <text x="395" y="224" fill="#e8e6df" font-family="EB Garamond" font-size="19" font-style="italic" text-anchor="middle">physics &amp;</text>
+              <text x="395" y="246" fill="#e8e6df" font-family="EB Garamond" font-size="19" font-style="italic" text-anchor="middle">methods</text>
+
+              <g transform="translate(270 201)">
+                <rect x="0" y="0" width="20" height="18" fill="#0d0e12" stroke="#a89a87"/>
+                <text x="10" y="13" font-family="EB Garamond" font-size="13" fill="#a89a87" text-anchor="middle">∩</text>
+              </g>
+            </g>
+
+            <!-- Ribbon anchor dots (matching original Venn.jsx) -->
+            <circle id="pf-anchor-L" cx="85"  cy="210" r="3" fill="#6a8ea0"/>
+            <circle id="pf-anchor-R" cx="475" cy="210" r="3" fill="#9a6450"/>
+            <circle id="pf-anchor-CT" cx="280" cy="115" r="3" fill="#a89a87"/>
+            <circle id="pf-anchor-CB" cx="280" cy="305" r="3" fill="#a89a87"/>
+          </svg>
+
+          <div class="pf-venn__bot">
+            <article class="pf-card pf-card--compact" data-id="C2" data-side="C">
+              <div class="pf-card__bar"><span class="pf-card__dot" style="background:#a89a87"></span><span class="pf-smallcaps">intersection · c2</span></div>
+              <div class="pf-card__body">
+                <h3 class="pf-card__title">Reproducible science</h3>
+                <p>Every figure from every paper, generated by a single command. Determinism as a first-class requirement.</p>
+                <div class="pf-pills">
+                  <span class="pf-chip" data-c="C">nix</span>
+                  <span class="pf-chip" data-c="C">snakemake</span>
+                  <span class="pf-chip" data-c="C">CI</span>
+                </div>
+              </div>
+            </article>
+          </div>
+        </div>
+
+        <!-- RIGHT cards -->
+        <div class="pf-venn__col" data-side="R">
+          <article class="pf-card" data-id="R1" data-side="R">
+            <div class="pf-card__bar"><span class="pf-card__dot" style="background:#9a6450"></span><span class="pf-smallcaps">methods · r1</span></div>
+            <div class="pf-card__body">
+              <h3 class="pf-card__title">Numerical methods</h3>
+              <p>Advanced proficiency in Python and C/C++; custom solvers for charge transport and percolation in high-dimensional networks.</p>
+              <div class="pf-pills">
+                <span class="pf-chip" data-c="R">C++17</span>
+                <span class="pf-chip" data-c="R">Python</span>
+                <span class="pf-chip" data-c="R">NumPy</span>
+              </div>
+            </div>
+          </article>
+          <article class="pf-card" data-id="R2" data-side="R">
+            <div class="pf-card__bar"><span class="pf-card__dot" style="background:#9a6450"></span><span class="pf-smallcaps">methods · r2</span></div>
+            <div class="pf-card__body">
+              <h3 class="pf-card__title">High-performance computing</h3>
+              <p>Scaling simulations on supercomputing clusters via OpenMP and MPI to model systems beyond standard workstation limits.</p>
+              <div class="pf-pills">
+                <span class="pf-chip" data-c="R">MPI</span>
+                <span class="pf-chip" data-c="R">OpenMP</span>
+                <span class="pf-chip" data-c="R">SLURM</span>
+              </div>
+            </div>
+          </article>
+          <article class="pf-card" data-id="R3" data-side="R">
+            <div class="pf-card__bar"><span class="pf-card__dot" style="background:#9a6450"></span><span class="pf-smallcaps">methods · r3</span></div>
+            <div class="pf-card__body">
+              <h3 class="pf-card__title">Specialized tooling</h3>
+              <p>Integration of COMSOL Multiphysics (FEM) and Mathematica for hybrid analytical–numerical workflows.</p>
+              <div class="pf-pills">
+                <span class="pf-chip" data-c="R">COMSOL</span>
+                <span class="pf-chip" data-c="R">Mathematica</span>
+              </div>
+            </div>
+          </article>
+          <article class="pf-card" data-id="R4" data-side="R">
+            <div class="pf-card__bar"><span class="pf-card__dot" style="background:#9a6450"></span><span class="pf-smallcaps">methods · r4</span></div>
+            <div class="pf-card__body">
+              <h3 class="pf-card__title">Applied computation</h3>
+              <p>Full-stack and engine work — unconventional software solutions applied to physics data-analysis pipelines.</p>
+              <div class="pf-pills">
+                <span class="pf-chip" data-c="R">Rust</span>
+                <span class="pf-chip" data-c="R">WebGL</span>
+                <span class="pf-chip" data-c="R">bots</span>
+              </div>
+            </div>
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="pf-venn__captions">
+      <div class="pf-venn__cap-tile" data-side="L">
+        <div class="pf-venn__cap-head">
+          <span class="pf-sw" style="background:#6a8ea0"></span>
+          <span class="pf-smallcaps">Left — research</span>
+          <span class="pf-n">n = 3</span>
+        </div>
+        <div class="pf-venn__cap-body">Condensed matter, stochastic transport, radiative surfaces.</div>
+      </div>
+      <div class="pf-venn__cap-tile" data-side="C">
+        <div class="pf-venn__cap-head">
+          <span class="pf-sw" style="background:#a89a87"></span>
+          <span class="pf-smallcaps">Centre — overlap</span>
+          <span class="pf-n">n = 2</span>
+        </div>
+        <div class="pf-venn__cap-body">Where simulation meets experiment.</div>
+      </div>
+      <div class="pf-venn__cap-tile" data-side="R">
+        <div class="pf-venn__cap-head">
+          <span class="pf-sw" style="background:#9a6450"></span>
+          <span class="pf-smallcaps">Right — methods</span>
+          <span class="pf-n">n = 4</span>
+        </div>
+        <div class="pf-venn__cap-body">HPC, numerical methods, software for scientific computing.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── PUBLICATIONS ────────────────────────────────────────── -->
+<section id="publications" class="pf-section" aria-labelledby="pubs-h">
+  <div class="pf-container">
+    <div class="pf-split__head pf-split__head--row">
+      <div>
+        <div class="pf-smallcaps pf-label">§ Publications</div>
+        <h2 id="pubs-h" class="pf-h2">Peer-reviewed work, preprints <em class="pf-ink--mute">&amp;</em> theses.</h2>
+      </div>
+      <p class="pf-lede">Filter by topic, or toggle between selected highlights and the full list. Each entry links to its DOI and a downloadable BibTeX record.</p>
+    </div>
+
+    <div class="pf-pubs__controls">
+      <div class="pf-toggle" role="tablist">
+        <button type="button" class="pf-toggle__btn is-active" data-mode="selected">Selected</button>
+        <button type="button" class="pf-toggle__btn"           data-mode="all">All</button>
+      </div>
+      <span class="pf-dim">topic:</span>
+      <button type="button" class="pf-topic is-active" data-topic="">any</button>
+      <!-- Topic buttons injected by JS to stay single-source-of-truth with the data. -->
+      <span class="pf-pubs__count"><span id="pf-pubs-count">0</span> items</span>
+    </div>
+
+    <ol class="pf-pubs__list pf-list--rule" id="pf-pubs-list"></ol>
+  </div>
+</section>
+
+<!-- ── TALKS ───────────────────────────────────────────────── -->
+<section id="talks" class="pf-section" aria-labelledby="talks-h">
+  <div class="pf-container">
+    <div class="pf-split__head pf-split__head--row">
+      <div>
+        <div class="pf-smallcaps pf-label">§ Talks &amp; conferences</div>
+        <h2 id="talks-h" class="pf-h2">Invited <em class="pf-ink--mute">&amp;</em> contributed talks.</h2>
+      </div>
+      <p class="pf-lede">Recent conference appearances and invited seminars. Slides available on request.</p>
+    </div>
+
+    <ul class="pf-list pf-list--rule pf-talks">
+      <li class="pf-talk">
+        <div class="pf-talk__year pf-smallcaps">2026</div>
+        <div class="pf-talk__kind" data-kind="Invited">Invited</div>
+        <div class="pf-talk__body">
+          <div class="pf-talk__title"><em>"Percolation in disordered 1D nanowire networks."</em></div>
+          <div class="pf-talk__venue"><em>E-MRS Spring Meeting</em> — Strasbourg, France</div>
+        </div>
+      </li>
+      <li class="pf-talk">
+        <div class="pf-talk__year pf-smallcaps">2025</div>
+        <div class="pf-talk__kind" data-kind="Contributed">Contributed</div>
+        <div class="pf-talk__body">
+          <div class="pf-talk__title"><em>"Monte Carlo estimators for Mie scattering."</em></div>
+          <div class="pf-talk__venue"><em>NeurIPS SciML Workshop</em> — Vancouver, Canada</div>
+        </div>
+      </li>
+      <li class="pf-talk">
+        <div class="pf-talk__year pf-smallcaps">2025</div>
+        <div class="pf-talk__kind" data-kind="Seminar">Seminar</div>
+        <div class="pf-talk__body">
+          <div class="pf-talk__title"><em>"Reproducibility in computational condensed matter."</em></div>
+          <div class="pf-talk__venue"><em>ULiège Physics Colloquium</em> — Liège, Belgium</div>
+        </div>
+      </li>
+      <li class="pf-talk">
+        <div class="pf-talk__year pf-smallcaps">2024</div>
+        <div class="pf-talk__kind" data-kind="Contributed">Contributed</div>
+        <div class="pf-talk__body">
+          <div class="pf-talk__title"><em>"Spectrally selective low-E coatings from 1D assemblies."</em></div>
+          <div class="pf-talk__venue"><em>MRS Fall Meeting</em> — Boston, USA</div>
+        </div>
+      </li>
+      <li class="pf-talk">
+        <div class="pf-talk__year pf-smallcaps">2024</div>
+        <div class="pf-talk__kind" data-kind="Poster">Poster</div>
+        <div class="pf-talk__body">
+          <div class="pf-talk__title"><em>"FDTD on percolating networks at scale."</em></div>
+          <div class="pf-talk__venue"><em>PRACE Days</em> — Prague, Czechia</div>
+        </div>
+      </li>
+      <li class="pf-talk">
+        <div class="pf-talk__year pf-smallcaps">2023</div>
+        <div class="pf-talk__kind" data-kind="Seminar">Seminar</div>
+        <div class="pf-talk__body">
+          <div class="pf-talk__title"><em>"Introduction to percolation theory."</em></div>
+          <div class="pf-talk__venue"><em>ULiège MSc Student Seminar</em> — Liège, Belgium</div>
+        </div>
+      </li>
+    </ul>
+  </div>
+</section>
+
+<!-- ── TEACHING ────────────────────────────────────────────── -->
+<section id="teaching" class="pf-section" aria-labelledby="teach-h">
+  <div class="pf-container">
+    <div class="pf-split__head pf-split__head--row">
+      <div>
+        <div class="pf-smallcaps pf-label">§ Teaching</div>
+        <h2 id="teach-h" class="pf-h2">Courses <em class="pf-ink--mute">&amp;</em> supervision.</h2>
+      </div>
+      <p class="pf-lede">Teaching and supervision at the University of Liège, 2023–present.</p>
+    </div>
+
+    <div class="pf-teach__grid">
+      <article class="pf-course">
+        <div class="pf-course__head">
+          <span class="pf-course__code">PHYS-2050</span>
+          <span class="pf-course__term pf-smallcaps">2024–25 · Spring</span>
+        </div>
+        <h3 class="pf-course__name">Statistical Physics I</h3>
+        <div class="pf-course__role">Teaching Assistant</div>
+        <p class="pf-course__note">Led weekly tutorials for 60 MSc students; wrote a supplementary notebook on Monte Carlo methods.</p>
+      </article>
+      <article class="pf-course">
+        <div class="pf-course__head">
+          <span class="pf-course__code">PHYS-1101</span>
+          <span class="pf-course__term pf-smallcaps">2023–24 · Fall</span>
+        </div>
+        <h3 class="pf-course__name">Classical Mechanics (BSc)</h3>
+        <div class="pf-course__role">Lab Instructor</div>
+        <p class="pf-course__note">Designed a numerical pendulum lab with Python + DAQ boards.</p>
+      </article>
+      <article class="pf-course">
+        <div class="pf-course__head">
+          <span class="pf-course__code">PHYS-3250</span>
+          <span class="pf-course__term pf-smallcaps">2024–25 · Fall</span>
+        </div>
+        <h3 class="pf-course__name">Computational Condensed Matter</h3>
+        <div class="pf-course__role">Guest Lecturer</div>
+        <p class="pf-course__note">Two guest lectures on percolation and random graphs.</p>
+      </article>
+      <article class="pf-course">
+        <div class="pf-course__head">
+          <span class="pf-course__code">MSc</span>
+          <span class="pf-course__term pf-smallcaps">2024 – present</span>
+        </div>
+        <h3 class="pf-course__name">Master's project co-supervision</h3>
+        <div class="pf-course__role">Co-supervisor</div>
+        <p class="pf-course__note">Co-supervising two MSc theses on nanowire-network transport.</p>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- ── AWARDS ──────────────────────────────────────────────── -->
+<section id="awards" class="pf-section" aria-labelledby="awards-h">
+  <div class="pf-container">
+    <div class="pf-split__head pf-split__head--row">
+      <div>
+        <div class="pf-smallcaps pf-label">§ Awards &amp; distinctions</div>
+        <h2 id="awards-h" class="pf-h2">Honours, fellowships <em class="pf-ink--mute">&amp;</em> grants.</h2>
+      </div>
+      <p class="pf-lede">Academic distinctions on the left; applied and open-science recognitions on the right.</p>
+    </div>
+
+    <div class="pf-awards__cols">
+      <div>
+        <div class="pf-awards__col-head">
+          <span class="pf-sw" style="background:#6a8ea0"></span>
+          <span class="pf-smallcaps">Academic</span>
+          <span class="pf-n">n = 5</span>
+        </div>
+        <ul class="pf-list pf-list--rule">
+          <li class="pf-award"><div class="pf-award__y pf-smallcaps">2025</div><div class="pf-award__body"><div class="pf-award__t">F.R.S.-FNRS FRIA Doctoral Fellowship</div><div class="pf-award__d">Four-year competitive PhD fellowship from the Belgian National Fund for Scientific Research.</div></div></li>
+          <li class="pf-award"><div class="pf-award__y pf-smallcaps">2025</div><div class="pf-award__body"><div class="pf-award__t">Best Poster, NeurIPS SciML Workshop</div><div class="pf-award__d">For Monte Carlo estimators of Mie scattering in disordered media.</div></div></li>
+          <li class="pf-award"><div class="pf-award__y pf-smallcaps">2024</div><div class="pf-award__body"><div class="pf-award__t">Prix de la Faculté des Sciences, ULiège</div><div class="pf-award__d">Awarded for the MSc thesis on percolation in 1D conduits (with the greatest distinction).</div></div></li>
+          <li class="pf-award"><div class="pf-award__y pf-smallcaps">2023</div><div class="pf-award__body"><div class="pf-award__t">Wallonie-Bruxelles International Mobility Grant</div><div class="pf-award__d">Short research stay at ETH Zürich, Computational Physics group.</div></div></li>
+          <li class="pf-award"><div class="pf-award__y pf-smallcaps">2022</div><div class="pf-award__body"><div class="pf-award__t">Dean's List, BSc in Physics</div><div class="pf-award__d">Top 5% of the cohort across all three bachelor years.</div></div></li>
+        </ul>
+      </div>
+      <div>
+        <div class="pf-awards__col-head">
+          <span class="pf-sw" style="background:#9a6450"></span>
+          <span class="pf-smallcaps">Applied &amp; open science</span>
+          <span class="pf-n">n = 3</span>
+        </div>
+        <ul class="pf-list pf-list--rule">
+          <li class="pf-award"><div class="pf-award__y pf-smallcaps">2025</div><div class="pf-award__body"><div class="pf-award__t">Seed grant — Vantage Labs</div><div class="pf-award__d">€180k pre-seed grant from the Walloon region for translating radiative-cooling coatings into product.</div></div></li>
+          <li class="pf-award"><div class="pf-award__y pf-smallcaps">2024</div><div class="pf-award__body"><div class="pf-award__t">HPC Allocation, CÉCI (Tier-1)</div><div class="pf-award__d">Granted 1.5M CPU-hours on Lucia/Nic5 for FDTD on percolating networks.</div></div></li>
+          <li class="pf-award"><div class="pf-award__y pf-smallcaps">2023</div><div class="pf-award__body"><div class="pf-award__t">ULiège Open-Science award</div><div class="pf-award__d">For the release and maintenance of <code>percolate-rs</code>, an open-source scientific solver.</div></div></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── INDUSTRY ────────────────────────────────────────────── -->
+<section id="industry" class="pf-section" aria-labelledby="ind-h">
+  <div class="pf-container">
+    <div class="pf-split__head pf-split__head--row">
+      <div>
+        <div class="pf-smallcaps pf-label">§ Industry &amp; entrepreneurship</div>
+        <h2 id="ind-h" class="pf-h2 pf-h2--small">Translating research <em class="pf-ink--mute">into</em> practice.</h2>
+      </div>
+      <p class="pf-lede">A small catalogue of applied, commercial, and open-source work that sits alongside my academic research.</p>
+    </div>
+
+    <ul class="pf-list pf-list--rule">
+      <li class="pf-ind">
+        <div class="pf-ind__y pf-smallcaps">2024 –</div>
+        <div class="pf-ind__org">Vantage Labs<span class="pf-ind__role">Co-founder &amp; CTO</span></div>
+        <div class="pf-ind__note">Spinning out radiative-cooling coatings from PhD research. Seed stage.</div>
+      </li>
+      <li class="pf-ind">
+        <div class="pf-ind__y pf-smallcaps">2023–24</div>
+        <div class="pf-ind__org">Open-source: percolate-rs<span class="pf-ind__role">Author &amp; maintainer</span></div>
+        <div class="pf-ind__note">Rust port of an MPI charge-transport solver; 40× single-node speed-up.</div>
+      </li>
+      <li class="pf-ind">
+        <div class="pf-ind__y pf-smallcaps">2022–23</div>
+        <div class="pf-ind__org">Independent consulting<span class="pf-ind__role">HPC consultant</span></div>
+        <div class="pf-ind__note">Helped two SMEs parallelize simulation workflows on local clusters.</div>
+      </li>
+    </ul>
+  </div>
+</section>
+
+<!-- ── FOOTER (CONTACT + CV) ───────────────────────────────── -->
+<footer id="contact" class="pf-section pf-footer" aria-labelledby="contact-h">
+  <div class="pf-container">
+    <div class="pf-footer__grid">
+      <div class="pf-footer__left">
+        <div class="pf-smallcaps pf-label">§ Contact</div>
+        <h2 id="contact-h" class="pf-h2">For correspondence <em class="pf-ink--mute">&amp;</em> collaboration.</h2>
+        <p class="pf-footer__p">
+          I welcome enquiries about research collaborations, visiting positions,
+          student supervision, and applied consulting related to stochastic media
+          and computational physics.
+        </p>
+        <div class="pf-footer__rows">
+          <div class="pf-contact-row"><div class="pf-smallcaps pf-contact-row__l">Email</div>   <div class="pf-contact-row__v pf-affil__val--mono">amaury.baret@uliege.be</div></div>
+          <div class="pf-contact-row"><div class="pf-smallcaps pf-contact-row__l">Office</div>  <div class="pf-contact-row__v pf-affil__val--serif">Bât. B5a, 4/81 — Allée du 6 Août</div></div>
+          <div class="pf-contact-row"><div class="pf-smallcaps pf-contact-row__l">Orcid</div>   <div class="pf-contact-row__v pf-affil__val--mono">0000-0002-1234-5678</div></div>
+          <div class="pf-contact-row"><div class="pf-smallcaps pf-contact-row__l">Scholar</div> <div class="pf-contact-row__v pf-affil__val--serif">Google Scholar profile</div></div>
+          <div class="pf-contact-row"><div class="pf-smallcaps pf-contact-row__l">GitHub</div>  <div class="pf-contact-row__v pf-affil__val--mono">github.com/abaret-phys</div></div>
+          <div class="pf-contact-row"><div class="pf-smallcaps pf-contact-row__l">arXiv</div>   <div class="pf-contact-row__v pf-affil__val--mono">a/baret_a_1</div></div>
+        </div>
+      </div>
+
+      <aside id="cv" class="pf-footer__cv">
+        <div class="pf-cv-card">
+          <div class="pf-smallcaps pf-label">§ Curriculum vitæ</div>
+          <div class="pf-cv-card__h">Amaury Baret — CV</div>
+          <p class="pf-cv-card__p">Six-page academic CV with education, publications, talks, teaching, and references. Updated April 2026.</p>
+          <div class="pf-cv-card__btns">
+            <a href="#" class="pf-btn pf-btn--ghost">CV (PDF)</a>
+            <a href="#" class="pf-btn pf-btn--ghost">Research statement</a>
+            <a href="#" class="pf-btn pf-btn--ghost">Publications (BibTeX)</a>
+          </div>
+        </div>
+      </aside>
+    </div>
+
+    <div class="pf-colophon">
+      <div>© 2026 Amaury Baret · University of Liège.</div>
+      <div>Built with HTML, CSS, and a fondness for marginalia. Set in EB Garamond &amp; Inter.</div>
+    </div>
+  </div>
+</footer>
+
+</div>
+
+<script defer src="assets/js/portfolio.js"></script>
+</body>
+</html>

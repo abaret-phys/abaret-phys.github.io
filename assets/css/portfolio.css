@@ -1,21 +1,5 @@
 /* ─────────────────────────────────────────────────────────────
    Portfolio — scoped stylesheet.
-
-   Everything is scoped under #portfolio-root so Minimal Mistakes'
-   own styles (navigation, sidebar, masthead) are unaffected on
-   other pages of the site.
-
-   Font loading is done once, unscoped (harmless — @import for
-   Google Fonts is idempotent). Everything else is namespaced.
-
-   Design tokens mirror the original Tailwind config 1:1:
-     --ink / --ink2 / --ink3   page background layers
-     --line / --line2          hairlines & dividers
-     --fg / --mute / --dim     text: primary / secondary / tertiary
-     --research (slate-teal)   left side of Venn
-     --industry (terracotta)   right side of Venn
-     --overlap  (warm neutral) intersection
-     --accent   (parchment gold) tags, highlights
    ───────────────────────────────────────────────────────────── */
 
 @import url('https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap');
@@ -34,11 +18,20 @@
   --overlap: #a89a87;
   --accent: #c6b98e;
 
+  /* Semantic border / surface tokens that flip with theme */
+  --hairline:          rgba(255,255,255,0.08);
+  --hairline-faint:    rgba(255,255,255,0.05);
+  --card-border:       rgba(255,255,255,0.10);
+  --code-bg:           rgba(255,255,255,0.04);
+  --grid-line:         rgba(255,255,255,0.02);
+  --toggle-active:     rgba(232,230,223,0.10);
+  --pill-pinned-bg:    rgba(255,255,255,0.05);
+  --pill-pinned-bdr:   rgba(255,255,255,0.15);
+
   --serif: "EB Garamond", Georgia, serif;
   --sans:  Inter, system-ui, sans-serif;
   --mono:  "JetBrains Mono", ui-monospace, monospace;
 
-  background: var(--ink);
   color: var(--fg);
   font-family: var(--sans);
   -webkit-font-smoothing: antialiased;
@@ -46,16 +39,139 @@
   line-height: 1.5;
 }
 
-/* Make the page itself dark so there's no flash of Minimal Mistakes
-   white above/below the scoped root. This is the one unscoped rule. */
-body.layout--splash.page--portfolio-page,
-body:has(#portfolio-root) {
-  background: #0d0e12;
+/* ── Light mode overrides ────────────────────────────────── */
+#portfolio-root[data-theme="light"] {
+  --ink: #f5f4ef;
+  --ink2: #eeecea;
+  --ink3: #e8e5de;
+  --line: #d4cfbb;
+  --line2: #c0bbb0;
+  --fg: #1c1e26;
+  --mute: #5a5e6e;
+  --dim: #8a8e9e;
+  --research: #3d6e83;
+  --industry: #7a4030;
+  --overlap: #7a6c58;
+  --accent: #8a7448;
+
+  --hairline:          rgba(0,0,0,0.09);
+  --hairline-faint:    rgba(0,0,0,0.06);
+  --card-border:       rgba(0,0,0,0.12);
+  --code-bg:           rgba(0,0,0,0.05);
+  --grid-line:         rgba(0,0,0,0.04);
+  --toggle-active:     rgba(0,0,0,0.08);
+  --pill-pinned-bg:    rgba(0,0,0,0.05);
+  --pill-pinned-bdr:   rgba(0,0,0,0.12);
+
 }
 
-/* Kill the default Minimal Mistakes page wrapper padding that would
-   otherwise create white margins around our full-bleed design.
-   We only override the wrappers that wrap our root. */
+/* Venn SVG text / rect fix in light mode */
+#portfolio-root[data-theme="light"] #pf-venn-svg text { fill: var(--fg); }
+#portfolio-root[data-theme="light"] #pf-venn-svg rect { fill: var(--ink2); stroke: var(--overlap); }
+
+/* Body carries the gradient so the canvas can sit in front of it */
+body:has(#portfolio-root) {
+  background:
+    radial-gradient(ellipse 80% 60% at 15% 25%, rgba(20,24,36,0.9) 0%, transparent 65%),
+    radial-gradient(ellipse 70% 50% at 85% 75%, rgba(16,20,30,0.7) 0%, transparent 60%),
+    linear-gradient(150deg, #12151e 0%, #0e1016 45%, #111420 75%, #131620 100%);
+  transition: background 0.5s ease;
+}
+body:has(#portfolio-root[data-theme="light"]) {
+  background:
+    radial-gradient(ellipse 80% 60% at 15% 20%, rgba(238,234,228,0.8) 0%, transparent 65%),
+    radial-gradient(ellipse 70% 50% at 85% 80%, rgba(234,230,222,0.6) 0%, transparent 60%),
+    linear-gradient(150deg, #f5f4ef 0%, #f1eeea 45%, #ede9e3 75%, #f2f0eb 100%);
+}
+
+/* Scrollbar — dark */
+html { scrollbar-color: #2d3140 #0e1016; scroll-behavior: smooth; }
+::-webkit-scrollbar              { width: 10px; height: 10px; }
+::-webkit-scrollbar-track        { background: #0e1016; }
+::-webkit-scrollbar-thumb        { background: #2d3140; border-radius: 8px; }
+
+/* Scrollbar — light */
+html:has(#portfolio-root[data-theme="light"]) { scrollbar-color: #c0bbb0 #f5f4ef; }
+html:has(#portfolio-root[data-theme="light"]) ::-webkit-scrollbar-track { background: #f5f4ef; }
+html:has(#portfolio-root[data-theme="light"]) ::-webkit-scrollbar-thumb { background: #c0bbb0; }
+
+/* ── Particles canvas ────────────────────────────────────── */
+#pf-particles {
+  position: fixed;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+  display: block;
+}
+
+/* ── Theme toggle button ─────────────────────────────────── */
+.pf-theme-toggle {
+  display: flex; align-items: center; justify-content: center;
+  width: 2rem; height: 2rem; border-radius: 2px;
+  border: 1px solid var(--line2);
+  background: transparent;
+  color: var(--mute);
+  cursor: pointer;
+  transition: color 0.2s, border-color 0.2s;
+  flex-shrink: 0;
+  margin-left: 0.5rem;
+}
+.pf-theme-toggle:hover { color: var(--fg); border-color: color-mix(in oklab, var(--accent) 60%, transparent); }
+.pf-theme-toggle svg        { width: 14px; height: 14px; stroke: currentColor; fill: currentColor; stroke-width: 1.75; stroke-linecap: round; stroke-linejoin: round; }
+.pf-theme-toggle svg circle,
+.pf-theme-toggle svg line   { fill: none; }
+
+/* ── Hero notice (postdoc availability) ──────────────────────
+   Styled as a first-class card to match .pf-cv-card / .pf-card:
+   subtle ink-tinted surface, hairline border, § label,
+   serif body. Lives below the hero CTA row.                    */
+.pf-notice {
+  position: relative;
+  margin: 2.25rem 0 0;
+  padding: 1.1rem 1.25rem 1.2rem;
+  border: 1px solid color-mix(in oklab, var(--line) 70%, transparent);
+  border-left: 2px solid var(--accent);
+  border-radius: 2px;
+  background: color-mix(in oklab, var(--ink2) 40%, transparent);
+  max-width: 52rem;
+}
+.pf-notice__head {
+  display: flex; align-items: baseline; justify-content: space-between;
+  gap: 1rem;
+  margin-bottom: 0.45rem;
+}
+.pf-notice__meta {
+  color: var(--accent);
+  font-size: 10.5px;
+  letter-spacing: 0.08em;
+}
+.pf-notice__h {
+  margin: 0 0 0.55rem;
+  font-family: var(--serif);
+  font-weight: 400;
+  font-size: 19px;
+  line-height: 1.25;
+  color: var(--fg);
+  letter-spacing: -0.005em;
+}
+.pf-notice__p {
+  margin: 0;
+  color: color-mix(in oklab, var(--fg) 85%, transparent);
+  font-family: var(--serif);
+  font-size: 15.5px;
+  line-height: 1.6;
+  text-wrap: pretty;
+}
+.pf-notice__p em     { font-style: italic; }
+.pf-notice__p strong { color: var(--accent); font-weight: 500; }
+.pf-notice__p a {
+  color: var(--accent);
+  border-bottom: 1px solid color-mix(in oklab, var(--accent) 40%, transparent);
+  transition: border-color 0.2s;
+}
+.pf-notice__p a:hover { border-bottom-color: var(--accent); }
+
+/* ── Global box-model / resets ───────────────────────────── */
 #portfolio-root * { box-sizing: border-box; }
 #portfolio-root a { color: inherit; text-decoration: none; }
 #portfolio-root em { font-style: italic; }
@@ -63,7 +179,7 @@ body:has(#portfolio-root) {
 #portfolio-root code {
   font-family: var(--mono);
   font-size: 0.92em;
-  background: rgba(255,255,255,0.04);
+  background: var(--code-bg);
   padding: 1px 5px;
   border-radius: 3px;
 }
@@ -77,7 +193,7 @@ body:has(#portfolio-root) {
 
 .pf-section {
   position: relative;
-  border-bottom: 1px solid rgba(255,255,255,0.08);
+  border-bottom: 1px solid var(--hairline);
   padding-block: 4rem;
 }
 @media (min-width: 768px) {
@@ -122,7 +238,7 @@ body:has(#portfolio-root) {
   position: sticky; top: 0; z-index: 40;
   border-bottom: 1px solid color-mix(in oklab, var(--line) 60%, transparent);
   backdrop-filter: blur(8px);
-  background: color-mix(in oklab, var(--ink) 80%, transparent);
+  background: color-mix(in oklab, var(--ink) 85%, transparent);
 }
 .pf-nav__row {
   display: flex; align-items: center; justify-content: space-between;
@@ -158,8 +274,8 @@ body:has(#portfolio-root) {
 .pf-hero__grid {
   position: absolute; inset: 0; pointer-events: none; opacity: 0.6;
   background-image:
-    linear-gradient(to right,  rgba(255,255,255,0.02) 1px, transparent 1px),
-    linear-gradient(to bottom, rgba(255,255,255,0.02) 1px, transparent 1px);
+    linear-gradient(to right,  var(--grid-line) 1px, transparent 1px),
+    linear-gradient(to bottom, var(--grid-line) 1px, transparent 1px);
   background-size: 56px 56px;
 }
 .pf-hero__glow {
@@ -249,10 +365,10 @@ body:has(#portfolio-root) {
   list-style: none; margin: 0; padding: 0;
 }
 .pf-list--rule {
-  border-top: 1px solid rgba(255,255,255,0.08);
-  border-bottom: 1px solid rgba(255,255,255,0.08);
+  border-top: 1px solid var(--hairline);
+  border-bottom: 1px solid var(--hairline);
 }
-.pf-list--rule > * + * { border-top: 1px solid rgba(255,255,255,0.08); }
+.pf-list--rule > * + * { border-top: 1px solid var(--hairline); }
 
 /* News row */
 .pf-row {
@@ -267,7 +383,7 @@ body:has(#portfolio-root) {
 .pf-row__body { font-family: var(--serif); font-size: 15.5px; line-height: 1.55; color: color-mix(in oklab, var(--fg) 90%, transparent); text-wrap: pretty; }
 
 /* ── Education row ───────────────────────────────────────── */
-.pf-list--wide .pf-edu + .pf-edu { border-top: 1px solid rgba(255,255,255,0.08); }
+.pf-list--wide .pf-edu + .pf-edu { border-top: 1px solid var(--hairline); }
 .pf-edu {
   display: grid; grid-template-columns: 1fr; gap: 0.5rem;
   padding-block: 1.25rem;
@@ -306,8 +422,8 @@ body:has(#portfolio-root) {
 }
 .pf-pill:hover { color: var(--fg); }
 .pf-pill.is-pinned {
-  background: rgba(255,255,255,0.05);
-  border-color: rgba(255,255,255,0.15);
+  background: var(--pill-pinned-bg);
+  border-color: var(--pill-pinned-bdr);
   color: var(--fg);
 }
 .pf-pill__sw { width: 10px; height: 10px; border-radius: 9999px; display: inline-block; }
@@ -326,8 +442,8 @@ body:has(#portfolio-root) {
 .pf-venn__grid {
   position: absolute; inset: 0; opacity: 0.4; pointer-events: none;
   background-image:
-    linear-gradient(to right,  rgba(255,255,255,0.02) 1px, transparent 1px),
-    linear-gradient(to bottom, rgba(255,255,255,0.02) 1px, transparent 1px);
+    linear-gradient(to right,  var(--grid-line) 1px, transparent 1px),
+    linear-gradient(to bottom, var(--grid-line) 1px, transparent 1px);
   background-size: 56px 56px;
 }
 .pf-venn__cap { position: absolute; font-size: 10.5px; color: var(--dim); z-index: 2; pointer-events: none; }
@@ -373,7 +489,7 @@ body:has(#portfolio-root) {
 .pf-card {
   background: color-mix(in oklab, var(--ink2) 95%, transparent);
   backdrop-filter: blur(4px);
-  border: 1px solid rgba(255,255,255,0.10);
+  border: 1px solid var(--card-border);
   border-radius: 2px;
   box-shadow: 0 20px 40px -20px rgba(0,0,0,0.8);
   opacity: 0.28;
@@ -387,14 +503,14 @@ body:has(#portfolio-root) {
 .pf-card[data-side="C"] { --pf-card-offset: 0; }
 .pf-card.is-active { opacity: 1; --pf-card-offset: 0; }
 .pf-card.is-highlighted {
-  border-color: rgba(255,255,255,0.25);
+  border-color: var(--pill-pinned-bdr);
   transform: scale(1.02);
 }
 .pf-card--compact { max-width: 300px; }
 .pf-card__bar {
   display: flex; align-items: center; gap: 0.5rem;
   padding: 0.375rem 0.75rem;
-  border-bottom: 1px solid rgba(255,255,255,0.05);
+  border-bottom: 1px solid var(--hairline-faint);
   font-size: 10px; color: var(--dim);
 }
 .pf-card__dot { width: 6px; height: 6px; border-radius: 9999px; display: inline-block; }
@@ -447,7 +563,7 @@ body:has(#portfolio-root) {
   .pf-venn__captions { grid-template-columns: repeat(3, 1fr); }
 }
 .pf-venn__cap-tile {
-  border: 1px solid rgba(255,255,255,0.08);
+  border: 1px solid var(--hairline);
   background: color-mix(in oklab, var(--ink2) 60%, transparent);
   border-radius: 2px;
   padding: 1rem;
@@ -474,7 +590,7 @@ body:has(#portfolio-root) {
   transition: color 0.2s, background 0.2s;
 }
 .pf-toggle__btn:hover        { color: var(--fg); }
-.pf-toggle__btn.is-active    { background: rgba(232,230,223,0.10); color: var(--fg); }
+.pf-toggle__btn.is-active    { background: var(--toggle-active); color: var(--fg); }
 
 .pf-topic {
   padding: 4px 8px; border: 1px solid var(--line2); border-radius: 2px;
@@ -490,10 +606,10 @@ body:has(#portfolio-root) {
 
 .pf-pubs__list {
   list-style: none; margin: 0; padding: 0;
-  border-top: 1px solid rgba(255,255,255,0.08);
-  border-bottom: 1px solid rgba(255,255,255,0.08);
+  border-top: 1px solid var(--hairline);
+  border-bottom: 1px solid var(--hairline);
 }
-.pf-pubs__list > li + li { border-top: 1px solid rgba(255,255,255,0.08); }
+.pf-pubs__list > li + li { border-top: 1px solid var(--hairline); }
 .pf-pub {
   display: grid; grid-template-columns: 1fr; gap: 1rem;
   padding-block: 1.25rem;
@@ -528,7 +644,7 @@ body:has(#portfolio-root) {
 .pf-pub__meta a:hover { color: var(--fg); }
 
 /* ── Talks ──────────────────────────────────────────────── */
-.pf-talks .pf-talk + .pf-talk { border-top: 1px solid rgba(255,255,255,0.08); }
+.pf-talks .pf-talk + .pf-talk { border-top: 1px solid var(--hairline); }
 .pf-talk {
   display: grid; grid-template-columns: 3fr 4fr 12fr;
   gap: 1rem; padding-block: 1rem;
@@ -626,7 +742,7 @@ body:has(#portfolio-root) {
 
 .pf-colophon {
   margin-top: 3.5rem; padding-top: 1.5rem;
-  border-top: 1px solid rgba(255,255,255,0.08);
+  border-top: 1px solid var(--hairline);
   display: flex; flex-direction: column; gap: 0.75rem;
   font-family: var(--serif); font-style: italic; font-size: 11.5px;
   color: var(--dim);
@@ -635,15 +751,10 @@ body:has(#portfolio-root) {
   .pf-colophon { flex-direction: row; align-items: center; justify-content: space-between; }
 }
 
-/* ── Scrollbar (webkit) ─────────────────────────────────── */
-html { scrollbar-color: #2d3140 #0d0e12; scroll-behavior: smooth; }
-::-webkit-scrollbar { width: 10px; height: 10px; }
-::-webkit-scrollbar-track { background: #0d0e12; }
-::-webkit-scrollbar-thumb { background: #2d3140; border-radius: 8px; }
-
 /* ── Reduced motion ─────────────────────────────────────── */
 @media (prefers-reduced-motion: reduce) {
   #portfolio-root *, #portfolio-root *::before, #portfolio-root *::after {
     transition: none !important; animation: none !important;
   }
+  #pf-particles { display: none; }
 }

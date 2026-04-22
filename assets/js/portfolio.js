@@ -16,14 +16,9 @@
   // Guard: only run once, only on pages that have the portfolio.
   if (!document.getElementById('portfolio-root')) return;
 
-  // Prefer DOMContentLoaded — with `defer` this fires correctly.
-  if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', init, { once: true });
-  } else {
-    init();
-  }
-
   function init () {
+    initThemeToggle();
+    initParticles();
     initVenn();
     initPublications();
   }
@@ -149,9 +144,10 @@
         path.setAttribute('fill', 'none');
         path.setAttribute('stroke-linecap', 'round');
 
-        const stroke = sideKey === 'L' ? '#6a8ea0'
-                     : sideKey === 'R' ? '#9a6450'
-                     : '#a89a87';
+        const cs     = getComputedStyle(document.getElementById('portfolio-root'));
+        const stroke = sideKey === 'L' ? cs.getPropertyValue('--research').trim()
+                     : sideKey === 'R' ? cs.getPropertyValue('--industry').trim()
+                     : cs.getPropertyValue('--overlap').trim();
         path.setAttribute('stroke', stroke);
 
         const isThis = activeId === id;
@@ -228,42 +224,45 @@
        - count label
      ═══════════════════════════════════════════════════════════ */
 
-  // Source-of-truth data — matches Publications.jsx exactly.
+  // Source-of-truth data — sourced from ORBi (u236047).
+  // Ordered from most recent to oldest.
   const PUBS = [
-    { y: 2026, authors: ['A. Baret', 'M. Chen', 'E. Laurent'],
-      title: 'Anomalous transport in 1D stochastic conduits',
-      venue: 'arXiv preprint', volume: '2603.09821',
-      topics: ['transport', 'percolation'], selected: true,
-      doi: '10.48550/arXiv.2603.09821' },
-    { y: 2025, authors: ['A. Baret', 'J.-Y. Dauphin'],
-      title: 'Non-equilibrium conduction in random 1D conduits near the percolation threshold',
-      venue: 'Physical Review B', volume: '112, 054101',
-      topics: ['transport', 'percolation', 'simulation'], selected: true,
-      doi: '10.1103/PhysRevB.112.054101' },
-    { y: 2025, authors: ['A. Baret', 'S. Okafor'],
-      title: 'Mie-scattering cross-sections of sparse metallic nanowire networks via Monte Carlo',
-      venue: 'Optics Express', volume: '33, 14 210',
-      topics: ['optics', 'Mie', 'simulation'],
-      doi: '10.1364/OE.504412' },
-    { y: 2024, authors: ['A. Baret', 'et al.'],
-      title: 'Spectrally selective low-emissivity coatings from disordered 1D assemblies',
-      venue: 'ACS Applied Materials & Interfaces', volume: '16, 32451',
-      topics: ['low-E', 'materials'], selected: true,
-      doi: '10.1021/acsami.4c05122' },
-    { y: 2024, authors: ['L. Hart', 'A. Baret'],
-      title: 'A reproducible pipeline for FDTD on percolating networks',
-      venue: 'Computer Physics Communications', volume: '298, 109103',
-      topics: ['HPC', 'reproducibility'],
-      doi: '10.1016/j.cpc.2024.109103' },
-    { y: 2023, authors: ['A. Baret', 'M. Chen'],
-      title: 'Thermochromic VO₂ stacks for autonomous radiative cooling',
-      venue: 'Solar Energy Materials & Solar Cells', volume: '255, 112281',
-      topics: ['radiative cooling', 'materials'],
-      doi: '10.1016/j.solmat.2023.112281' },
-    { y: 2022, authors: ['A. Baret'],
-      title: "Percolation thresholds on random 1D conduit graphs (Master's thesis, with distinction)",
-      venue: 'University of Liège', volume: 'Thesis',
-      topics: ['percolation', 'thesis'] },
+    { y: 2025,
+      authors: ['A. Baret', 'J. Baumgarten', 'F. Balty', 'F. Rabecki', 'J. Brisbois', 'B. Zheng', 'D. Bellet', 'N. D. Nguyen'],
+      title: 'The refractive index of silver nanowire networks: a heuristic approach to the foundations of the optical constants, from experiment to theory',
+      venue: 'Discover Nano', volume: '20, 131',
+      topics: ['optics', 'nanowires'],
+      doi: '10.1186/s11671-025-04312-9' },
+    { y: 2025,
+      authors: ['T. Ratz', 'E. Fourneau', 'N. Sliti', 'C. Malherbe', 'A. Baret', 'B. Vertruyen', 'A. Silhanek', 'N. D. Nguyen'],
+      title: 'Correlation between material properties, crystalline transitions, and point defects in RF sputtered (N,Mg)-doped copper oxide thin films',
+      venue: 'ACS Applied Electronic Materials', volume: '7(2)',
+      topics: ['thin films', 'materials'],
+      doi: '10.1021/acsaelm.4c01396' },
+    { y: 2025,
+      authors: ['A. Baret'],
+      title: 'Reconnecting the Fractured: Nanowire Networks and the Physics of Bridge Percolation',
+      venue: 'Bulletin de la Société Royale des Sciences de Liège', volume: '94(1), 80–101',
+      topics: ['percolation', 'nanowires'], selected: true,
+      doi: '10.25518/0037-9565.12531' },
+    { y: 2025,
+      authors: ['A. Baret', 'A. Khan', 'A. Rougier', 'D. Bellet', 'N. D. Nguyen'],
+      title: 'Low-emissivity fine-tuning of efficient VO₂-based thermochromic stacks with silver nanowire networks',
+      venue: 'RSC Applied Interfaces', volume: '2(1), 94–103',
+      topics: ['low-E', 'thermochromic', 'nanowires'], selected: true,
+      doi: '10.1039/d4lf00234b' },
+    { y: 2024,
+      authors: ['F. Balty', 'A. Baret', 'A. Silhanek', 'N. D. Nguyen'],
+      title: 'Insight into the morphological instability of metallic nanowires under thermal stress',
+      venue: 'Journal of Colloid and Interface Science', volume: '',
+      topics: ['nanowires', 'materials'],
+      doi: '10.1016/j.jcis.2024.06.074' },
+    { y: 2024,
+      authors: ['A. Baret', 'L. Bardet', 'D. Oser', 'D. Langley', 'F. Balty', 'D. Bellet', 'N. D. Nguyen'],
+      title: 'Bridge percolation: electrical connectivity of discontinued conducting slabs by metallic nanowires',
+      venue: 'Nanoscale', volume: '16, 8361–8368',
+      topics: ['percolation', 'nanowires', 'transport'], selected: true,
+      doi: '10.1039/d3nr05850f' },
   ];
 
   const ALL_TOPICS = Array.from(new Set(PUBS.flatMap(p => p.topics))).sort();
@@ -274,7 +273,7 @@
     const controls  = document.querySelector('.pf-pubs__controls');
     if (!list || !controls) return;
 
-    let mode        = 'selected';   // 'selected' | 'all'
+    let mode        = 'all';        // 'selected' | 'all'
     let activeTopic = null;         // string | null
 
     // Build topic buttons once, inserted after the "any" button.
@@ -405,4 +404,188 @@
 
     render();
   }
+
+  /* ═══════════════════════════════════════════════════════════
+     THEME TOGGLE
+     Persists preference in localStorage; falls back to system.
+     Swaps the nav icon (moon → sun and back).
+     ═══════════════════════════════════════════════════════════ */
+
+  function setIcon (isDark) {
+    const icon = document.getElementById('pf-toggle-icon');
+    if (!icon) return;
+    icon.innerHTML = isDark
+      ? '<path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>'
+      : '<circle cx="12" cy="12" r="4"/>'
+      + '<line x1="12" y1="2" x2="12" y2="4"/>'
+      + '<line x1="12" y1="20" x2="12" y2="22"/>'
+      + '<line x1="2" y1="12" x2="4" y2="12"/>'
+      + '<line x1="20" y1="12" x2="22" y2="12"/>'
+      + '<line x1="4.93" y1="4.93" x2="6.34" y2="6.34"/>'
+      + '<line x1="17.66" y1="17.66" x2="19.07" y2="19.07"/>'
+      + '<line x1="4.93" y1="19.07" x2="6.34" y2="17.66"/>'
+      + '<line x1="17.66" y1="6.34" x2="19.07" y2="4.93"/>';
+  }
+
+  function initThemeToggle () {
+    const root   = document.getElementById('portfolio-root');
+    const btn    = document.getElementById('pf-theme-toggle');
+    if (!root || !btn) return;
+
+    const stored = localStorage.getItem('pf-theme');
+    const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+    const isDark = stored ? stored === 'dark' : prefersDark !== false;
+
+    applyTheme(isDark);
+
+    btn.addEventListener('click', () => {
+      const nowDark = root.dataset.theme !== 'light';
+      applyTheme(!nowDark);
+      localStorage.setItem('pf-theme', !nowDark ? 'dark' : 'light');
+    });
+
+    function applyTheme (dark) {
+      root.dataset.theme = dark ? 'dark' : 'light';
+      setIcon(dark);
+      btn.setAttribute('aria-label', dark ? 'Switch to light mode' : 'Switch to dark mode');
+    }
+  }
+
+  /* ═══════════════════════════════════════════════════════════
+     PARTICLE NETWORK
+     Canvas-based: ~65 nodes that drift, connect when close,
+     and repel from the cursor. Colours read from CSS variables
+     so they update instantly on theme switch.
+     ═══════════════════════════════════════════════════════════ */
+
+  function initParticles () {
+    const canvas = document.getElementById('pf-particles');
+    if (!canvas || !canvas.getContext) return;
+    const ctx = canvas.getContext('2d');
+
+    const COUNT        = 65;
+    const CONNECT_DIST = 175;
+    const CURSOR_DIST  = 110;
+    const BASE_SPEED   = 0.35;
+
+    let W, H, nodes;
+    const mouse = { x: -9999, y: -9999 };
+
+    function isDarkMode () {
+      return document.getElementById('portfolio-root').dataset.theme !== 'light';
+    }
+
+    function resize () {
+      W = canvas.width  = window.innerWidth;
+      H = canvas.height = window.innerHeight;
+    }
+
+    function makeNode () {
+      const angle = Math.random() * Math.PI * 2;
+      const speed = BASE_SPEED * (0.4 + Math.random() * 0.8);
+      return {
+        x:  Math.random() * W,
+        y:  Math.random() * H,
+        vx: Math.cos(angle) * speed,
+        vy: Math.sin(angle) * speed,
+        r:  Math.random() * 1.2 + 0.8,
+      };
+    }
+
+    function tick () {
+      ctx.clearRect(0, 0, W, H);
+      const dark = isDarkMode();
+
+      const nr = dark ? 106 : 61;
+      const ng = dark ? 142 : 110;
+      const nb = dark ? 160 : 131;
+
+      // Update
+      for (let i = 0; i < nodes.length; i++) {
+        const n = nodes[i];
+
+        // Cursor repulsion
+        const dx = n.x - mouse.x;
+        const dy = n.y - mouse.y;
+        const dd = Math.sqrt(dx * dx + dy * dy);
+        if (dd < CURSOR_DIST && dd > 0.5) {
+          const f = ((CURSOR_DIST - dd) / CURSOR_DIST) * 0.6;
+          n.vx += (dx / dd) * f;
+          n.vy += (dy / dd) * f;
+        }
+
+        // Damping + speed floor
+        n.vx *= 0.985;
+        n.vy *= 0.985;
+        const spd = Math.sqrt(n.vx * n.vx + n.vy * n.vy);
+        if (spd > BASE_SPEED * 3) {
+          n.vx = (n.vx / spd) * BASE_SPEED * 3;
+          n.vy = (n.vy / spd) * BASE_SPEED * 3;
+        }
+        if (spd < 0.05) {
+          const a = Math.random() * Math.PI * 2;
+          n.vx += Math.cos(a) * 0.04;
+          n.vy += Math.sin(a) * 0.04;
+        }
+
+        n.x += n.vx;
+        n.y += n.vy;
+
+        // Wrap edges
+        if (n.x < -20) n.x = W + 20;
+        else if (n.x > W + 20) n.x = -20;
+        if (n.y < -20) n.y = H + 20;
+        else if (n.y > H + 20) n.y = -20;
+      }
+
+      // Draw edges
+      for (let i = 0; i < nodes.length; i++) {
+        for (let j = i + 1; j < nodes.length; j++) {
+          const dx = nodes[i].x - nodes[j].x;
+          const dy = nodes[i].y - nodes[j].y;
+          const d  = Math.sqrt(dx * dx + dy * dy);
+          if (d < CONNECT_DIST) {
+            const alpha = (1 - d / CONNECT_DIST) * (dark ? 0.18 : 0.13);
+            ctx.beginPath();
+            ctx.strokeStyle = `rgba(${nr},${ng},${nb},${alpha})`;
+            ctx.lineWidth = 0.8;
+            ctx.moveTo(nodes[i].x, nodes[i].y);
+            ctx.lineTo(nodes[j].x, nodes[j].y);
+            ctx.stroke();
+          }
+        }
+      }
+
+      // Draw nodes
+      const nodeAlpha = dark ? 0.5 : 0.35;
+      for (let i = 0; i < nodes.length; i++) {
+        const n = nodes[i];
+        ctx.beginPath();
+        ctx.arc(n.x, n.y, n.r, 0, Math.PI * 2);
+        ctx.fillStyle = `rgba(${nr},${ng},${nb},${nodeAlpha})`;
+        ctx.fill();
+      }
+
+      requestAnimationFrame(tick);
+    }
+
+    resize();
+    nodes = Array.from({ length: COUNT }, makeNode);
+
+    window.addEventListener('resize', resize);
+    document.addEventListener('mousemove', e => { mouse.x = e.clientX; mouse.y = e.clientY; });
+    document.addEventListener('mouseleave', () => { mouse.x = -9999; mouse.y = -9999; });
+
+    tick();
+  }
+
+  // Entry point — placed at the bottom so all top-level `const`s
+  // in the IIFE are initialized before init() runs. The script is
+  // loaded with `defer`, so DOM is already parsed by this point.
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', init, { once: true });
+  } else {
+    init();
+  }
+
 })();

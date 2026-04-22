@@ -24,6 +24,8 @@
 
 <div id="portfolio-root">
 
+<canvas id="pf-particles" aria-hidden="true"></canvas>
+
 <!-- ── NAV ─────────────────────────────────────────────────── -->
 <header class="pf-nav" role="banner">
   <div class="pf-container pf-nav__row">
@@ -39,7 +41,16 @@
       <a href="#teaching">Teaching</a>
       <a href="#contact">Contact</a>
     </nav>
-    <a href="#cv" class="pf-btn pf-btn--ghost">CV (PDF)</a>
+    <div style="display:flex;align-items:center;gap:0.5rem">
+      <button id="pf-theme-toggle" class="pf-theme-toggle" aria-label="Toggle colour theme" type="button">
+        <!-- Icon swapped by JS -->
+        <svg id="pf-toggle-icon" viewBox="0 0 24 24" aria-hidden="true">
+          <!-- moon (shown in dark mode) -->
+          <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
+        </svg>
+      </button>
+      <a href="#cv" class="pf-btn pf-btn--ghost">CV (PDF)</a>
+    </div>
   </div>
 </header>
 
@@ -74,11 +85,11 @@
       <aside class="pf-affil">
         <div class="pf-affil__row">
           <div class="pf-affil__label pf-smallcaps">Laboratory</div>
-          <div class="pf-affil__val pf-affil__val--serif">GREΘA — Group for Research on Energy &amp; Thermal Applications</div>
+          <div class="pf-affil__val pf-affil__val--serif">SPIN — Solid State Physics, Interfaces and Nanostructures &amp; Thermal Applications</div>
         </div>
         <div class="pf-affil__row">
           <div class="pf-affil__label pf-smallcaps">Supervisor</div>
-          <div class="pf-affil__val pf-affil__val--serif">Prof. J.-Y. Dauphin</div>
+          <div class="pf-affil__val pf-affil__val--serif">Prof. Ngoc Duy Nguyen</div>
         </div>
         <div class="pf-affil__row">
           <div class="pf-affil__label pf-smallcaps">Affiliations</div>
@@ -93,11 +104,11 @@
         </div>
         <div class="pf-affil__row">
           <div class="pf-affil__label pf-smallcaps">Orcid</div>
-          <div class="pf-affil__val pf-affil__val--mono">0000-0002-1234-5678</div>
+          <div class="pf-affil__val pf-affil__val--mono">0000-0001-5037-9053</div>
         </div>
         <div class="pf-affil__row">
           <div class="pf-affil__label pf-smallcaps">Email</div>
-          <div class="pf-affil__val pf-affil__val--mono">amaury.baret@uliege.be</div>
+          <div class="pf-affil__val pf-affil__val--mono">abaret@uliege.be</div>
         </div>
       </aside>
     </div>
@@ -109,6 +120,22 @@
       <a href="#cv">Curriculum vitæ</a><span class="pf-dot">·</span>
       <a href="#contact">Contact</a>
     </p>
+
+    <aside class="pf-notice" role="note" aria-labelledby="notice-h">
+      <div class="pf-notice__head">
+        <span class="pf-smallcaps pf-label">§ Open to collaborate</span>
+        <span class="pf-notice__meta pf-smallcaps">E-MRS 2026</span>
+      </div>
+      <h3 id="notice-h" class="pf-notice__h">
+        Postdoctoral collaborations <em class="pf-ink--mute">&amp;</em> joint fellowship applications.
+      </h3>
+      <p class="pf-notice__p">
+        I am exploring <em>postdoctoral collaborations</em> and joint applications for
+        <em>MSCA Postdoctoral Fellowships</em> or <em>FNRS</em> funding, with a start in
+        <strong>late 2027 / 2028</strong>. I would be glad to discuss possible synergies —
+        please <a href="#contact">get in touch</a>.
+      </p>
+    </aside>
   </div>
 </section>
 
@@ -117,14 +144,14 @@
   <div class="pf-container pf-split">
     <div class="pf-split__head">
       <div class="pf-smallcaps pf-label">§ Recent activity</div>
-      <h2 id="news-h" class="pf-h2">News from the lab <em class="pf-ink--mute">&amp;</em> the desk.</h2>
+      <h2 id="news-h" class="pf-h2">News</h2>
       <p class="pf-lede">Talks, preprints, and releases in reverse chronological order. Full archive is on the publications page.</p>
     </div>
     <ul class="pf-split__body pf-list pf-list--rule">
       <li class="pf-row">
-        <div class="pf-row__date pf-smallcaps">Apr 2026</div>
+        <div class="pf-row__date pf-smallcaps">May 2026</div>
         <div class="pf-row__tag">Talk</div>
-        <div class="pf-row__body">Invited talk at the E-MRS Spring Meeting: percolation in disordered nanowire networks.</div>
+        <div class="pf-row__body">Contributed talk and poster at the E-MRS Spring Meeting: percolation in disordered nanowire networks.</div>
       </li>
       <li class="pf-row">
         <div class="pf-row__date pf-smallcaps">Mar 2026</div>
@@ -452,8 +479,8 @@
 
     <div class="pf-pubs__controls">
       <div class="pf-toggle" role="tablist">
-        <button type="button" class="pf-toggle__btn is-active" data-mode="selected">Selected</button>
-        <button type="button" class="pf-toggle__btn"           data-mode="all">All</button>
+        <button type="button" class="pf-toggle__btn is-active" data-mode="all">All</button>
+        <button type="button" class="pf-toggle__btn"           data-mode="selected">Selected</button>
       </div>
       <span class="pf-dim">topic:</span>
       <button type="button" class="pf-topic is-active" data-topic="">any</button>
@@ -478,51 +505,83 @@
 
     <ul class="pf-list pf-list--rule pf-talks">
       <li class="pf-talk">
-        <div class="pf-talk__year pf-smallcaps">2026</div>
-        <div class="pf-talk__kind" data-kind="Invited">Invited</div>
+        <div class="pf-talk__year pf-smallcaps">Oct 2025</div>
+        <div class="pf-talk__kind" data-kind="Contributed">Contributed</div>
         <div class="pf-talk__body">
-          <div class="pf-talk__title"><em>"Percolation in disordered 1D nanowire networks."</em></div>
+          <div class="pf-talk__title"><em>"Heuristic approach to the fundamental optical constants of silver nanowire networks: experiments and theory."</em></div>
+          <div class="pf-talk__venue"><em>TCM-TOEO 2025</em> — Rethymno, Greece</div>
+        </div>
+      </li>
+      <li class="pf-talk">
+        <div class="pf-talk__year pf-smallcaps">Oct 2025</div>
+        <div class="pf-talk__kind" data-kind="Poster">Poster</div>
+        <div class="pf-talk__body">
+          <div class="pf-talk__title"><em>"Crystalline transitions and point defects in (N, Mg)-doped copper oxide thin films deposited by radiofrequency magnetron sputtering."</em> <span class="pf-dim">(co-author)</span></div>
+          <div class="pf-talk__venue"><em>TCM-TOEO 2025</em> — Rethymno, Greece</div>
+        </div>
+      </li>
+      <li class="pf-talk">
+        <div class="pf-talk__year pf-smallcaps">Oct 2025</div>
+        <div class="pf-talk__kind" data-kind="Poster">Poster</div>
+        <div class="pf-talk__body">
+          <div class="pf-talk__title"><em>"Thermal emissivity of silver nanowire networks: a characterization tool for instability studies."</em></div>
+          <div class="pf-talk__venue"><em>TCM-TOEO 2025</em> — Rethymno, Greece</div>
+        </div>
+      </li>
+      <li class="pf-talk">
+        <div class="pf-talk__year pf-smallcaps">Sep 2025</div>
+        <div class="pf-talk__kind" data-kind="Poster">Poster</div>
+        <div class="pf-talk__body">
+          <div class="pf-talk__title"><em>"Crystalline phase transitions and point defects in N- and Mg-doped copper oxide thin films deposited by magnetron sputtering."</em></div>
+          <div class="pf-talk__venue"><em>Belgian Crystallography Symposium — 13</em> — Leuven, Belgium</div>
+        </div>
+      </li>
+      <li class="pf-talk">
+        <div class="pf-talk__year pf-smallcaps">Jun 2025</div>
+        <div class="pf-talk__kind" data-kind="Contributed">Contributed</div>
+        <div class="pf-talk__body">
+          <div class="pf-talk__title"><em>"Optical constants of silver nanowire networks: theory and experiments."</em></div>
+          <div class="pf-talk__venue"><em>Materials Today Conference 2025</em> — Sitges, Spain</div>
+        </div>
+      </li>
+      <li class="pf-talk">
+        <div class="pf-talk__year pf-smallcaps">Jun 2025</div>
+        <div class="pf-talk__kind" data-kind="Poster">Poster</div>
+        <div class="pf-talk__body">
+          <div class="pf-talk__title"><em>"On the thermal emissivity of highly efficient VO₂-based thermochromic stacks coated with silver nanowire networks."</em></div>
+          <div class="pf-talk__venue"><em>Materials Today Conference 2025</em> — Sitges, Spain</div>
+        </div>
+      </li>
+      <li class="pf-talk">
+        <div class="pf-talk__year pf-smallcaps">May 2025</div>
+        <div class="pf-talk__kind" data-kind="Contributed">Contributed</div>
+        <div class="pf-talk__body">
+          <div class="pf-talk__title"><em>"Optical constants of silver nanowire networks: theory and experiments."</em></div>
+          <div class="pf-talk__venue"><em>E-MRS Spring Meeting 2025, Symposium F</em> — Strasbourg, France</div>
+        </div>
+      </li>
+      <li class="pf-talk">
+        <div class="pf-talk__year pf-smallcaps">May 2024</div>
+        <div class="pf-talk__kind" data-kind="Contributed">Contributed</div>
+        <div class="pf-talk__body">
+          <div class="pf-talk__title"><em>"Low-emissivity fine-tuning of efficient VO₂-based thermochromic stacks via silver nanowire networks."</em></div>
+          <div class="pf-talk__venue"><em>E-MRS Spring Meeting 2024, Symposium A</em> — Strasbourg, France</div>
+        </div>
+      </li>
+      <li class="pf-talk">
+        <div class="pf-talk__year pf-smallcaps">Jun 2023</div>
+        <div class="pf-talk__kind" data-kind="Poster">Poster</div>
+        <div class="pf-talk__body">
+          <div class="pf-talk__title"><em>"Bridge percolation: electrical connectivity of discontinued conducting slabs by metallic nanowires."</em></div>
           <div class="pf-talk__venue"><em>E-MRS Spring Meeting</em> — Strasbourg, France</div>
         </div>
       </li>
       <li class="pf-talk">
-        <div class="pf-talk__year pf-smallcaps">2025</div>
-        <div class="pf-talk__kind" data-kind="Contributed">Contributed</div>
-        <div class="pf-talk__body">
-          <div class="pf-talk__title"><em>"Monte Carlo estimators for Mie scattering."</em></div>
-          <div class="pf-talk__venue"><em>NeurIPS SciML Workshop</em> — Vancouver, Canada</div>
-        </div>
-      </li>
-      <li class="pf-talk">
-        <div class="pf-talk__year pf-smallcaps">2025</div>
-        <div class="pf-talk__kind" data-kind="Seminar">Seminar</div>
-        <div class="pf-talk__body">
-          <div class="pf-talk__title"><em>"Reproducibility in computational condensed matter."</em></div>
-          <div class="pf-talk__venue"><em>ULiège Physics Colloquium</em> — Liège, Belgium</div>
-        </div>
-      </li>
-      <li class="pf-talk">
-        <div class="pf-talk__year pf-smallcaps">2024</div>
-        <div class="pf-talk__kind" data-kind="Contributed">Contributed</div>
-        <div class="pf-talk__body">
-          <div class="pf-talk__title"><em>"Spectrally selective low-E coatings from 1D assemblies."</em></div>
-          <div class="pf-talk__venue"><em>MRS Fall Meeting</em> — Boston, USA</div>
-        </div>
-      </li>
-      <li class="pf-talk">
-        <div class="pf-talk__year pf-smallcaps">2024</div>
+        <div class="pf-talk__year pf-smallcaps">Oct 2022</div>
         <div class="pf-talk__kind" data-kind="Poster">Poster</div>
         <div class="pf-talk__body">
-          <div class="pf-talk__title"><em>"FDTD on percolating networks at scale."</em></div>
-          <div class="pf-talk__venue"><em>PRACE Days</em> — Prague, Czechia</div>
-        </div>
-      </li>
-      <li class="pf-talk">
-        <div class="pf-talk__year pf-smallcaps">2023</div>
-        <div class="pf-talk__kind" data-kind="Seminar">Seminar</div>
-        <div class="pf-talk__body">
-          <div class="pf-talk__title"><em>"Introduction to percolation theory."</em></div>
-          <div class="pf-talk__venue"><em>ULiège MSc Student Seminar</em> — Liège, Belgium</div>
+          <div class="pf-talk__title"><em>"Composite transparent conducting material using metallic nanowire networks on a flexible substrate."</em></div>
+          <div class="pf-talk__venue"><em>TCM-TOEO 2022</em> — Hersonissos, Greece</div>
         </div>
       </li>
     </ul>

@@ -24,21 +24,19 @@
   }
 
   /* ═══════════════════════════════════════════════════════════
-     VENN DIAGRAM
-     Behaviour (lifted from Venn.jsx):
-       - `pinned`  side (L/R/C) — starts as 'L'.
-       - `hover`   side or branch id — transient.
-       - `active = hover || pinned`. A 1-char value ('L'|'R'|'C')
-         means "the whole side is active"; a 2-char value
-         (e.g. 'L2', 'C1') means "that specific branch is
-         highlighted within its side".
-     DOM update strategy:
-       - Add `is-active` to cards whose side matches, plus
-         `is-highlighted` to the one matching the exact id.
-       - Add `side-L|R|C` class on the Venn <svg> to drive
-         circle scale/opacity/lens via CSS.
-       - Rebuild ribbon <path>s from anchor centers to each
-         active card's inner edge, using a symmetric Bézier.
+     VENN DIAGRAM (three-circle triangular layout)
+     Sides:
+       - T (top-center)  : Stochastic media & energy — uses --research
+       - L (bottom-left) : Experimental skills      — uses --overlap
+       - R (bottom-right): Computational methods    — uses --industry
+     Behaviour:
+       - `pinned` side (T/L/R) — starts as 'T'.
+       - `hover`  side or branch id — transient.
+       - `active = hover || pinned`. 1-char = whole side; 2-char = card id.
+     DOM update:
+       - `is-active` / `is-highlighted` classes on cards.
+       - `side-T|L|R` class on the Venn <svg> drives circle emphasis.
+       - Ribbons redrawn from rim anchors to active cards.
      ═══════════════════════════════════════════════════════════ */
 
   function initVenn () {
@@ -49,23 +47,21 @@
     if (!stage || !ribbonsSvg || !vennSvg) return;
 
     // ── State ────────────────────────────────────────────────
-    let pinned = 'L';
+    let pinned = 'T';
     let hover  = null;
 
     // ── Element collections ──────────────────────────────────
     const cards   = Array.from(stage.querySelectorAll('.pf-card'));
     const pills   = Array.from(document.querySelectorAll('.pf-pill'));
     const circles = {
+      T: document.getElementById('pf-venn-T'),
       L: document.getElementById('pf-venn-L'),
       R: document.getElementById('pf-venn-R'),
-      // Intersection hit-area ellipse (no id, selected by side):
-      C: vennSvg.querySelector('ellipse[data-side="C"]'),
     };
     const anchors = {
-      L:  document.getElementById('pf-anchor-L'),
-      R:  document.getElementById('pf-anchor-R'),
-      CT: document.getElementById('pf-anchor-CT'),
-      CB: document.getElementById('pf-anchor-CB'),
+      T: document.getElementById('pf-anchor-T'),
+      L: document.getElementById('pf-anchor-L'),
+      R: document.getElementById('pf-anchor-R'),
     };
 
     // ── Derived view ─────────────────────────────────────────
@@ -82,8 +78,8 @@
       const side = activeSide();
       const a    = activeValue();
 
-      // 1. Circles / lens — toggle CSS classes
-      vennSvg.classList.remove('side-L', 'side-R', 'side-C');
+      // 1. Circles — toggle CSS classes
+      vennSvg.classList.remove('side-T', 'side-L', 'side-R');
       if (side) vennSvg.classList.add('side-' + side);
 
       // 2. Cards
@@ -108,11 +104,10 @@
 
     // ── Ribbon drawing ───────────────────────────────────────
     // For each active card on the active side, draw a smooth
-    // cubic Bézier from the matching rim anchor to the card's
-    // inner edge. Center cards (C1 above, C2 below) use the top
-    // and bottom anchors respectively.
+    // cubic Bézier from the rim anchor to the card's edge.
+    // T cards sit above the SVG centered on the stage, so the
+    // ribbon meets their horizontal midpoint at their bottom.
     function drawRibbons (side, activeId) {
-      // Clear previous paths
       while (ribbonsSvg.firstChild) ribbonsSvg.removeChild(ribbonsSvg.firstChild);
       if (!side) return;
 
@@ -127,17 +122,22 @@
         const fx = ab.left + ab.width  / 2 - stageRect.left;
         const fy = ab.top  + ab.height / 2 - stageRect.top;
 
-        // Anchor the card end on the inner edge, vertical midline.
-        let tx;
-        if (sideKey === 'L')      tx = cb.right - stageRect.left;
-        else if (sideKey === 'R') tx = cb.left  - stageRect.left;
-        else                      tx = cb.left  + cb.width / 2 - stageRect.left;
-        const ty = cb.top + cb.height / 2 - stageRect.top;
+        // Anchor the card end: inner edge for L/R, bottom-center for T.
+        let tx, ty;
+        if (sideKey === 'L')      { tx = cb.right - stageRect.left;              ty = cb.top + cb.height / 2 - stageRect.top; }
+        else if (sideKey === 'R') { tx = cb.left  - stageRect.left;              ty = cb.top + cb.height / 2 - stageRect.top; }
+        else                      { tx = cb.left  + cb.width  / 2 - stageRect.left; ty = cb.bottom - stageRect.top; }
 
-        // Symmetric cubic Bézier — control points pull toward
-        // the midpoint so the ribbon arcs smoothly without loops.
-        const mx = (fx + tx) / 2;
-        const d  = `M ${fx} ${fy} C ${mx} ${fy}, ${mx} ${ty}, ${tx} ${ty}`;
+        // Symmetric cubic Bézier — control points pull toward the midpoint.
+        // For T (vertical run) we pull controls vertically; for L/R, horizontally.
+        let d;
+        if (sideKey === 'T') {
+          const my = (fy + ty) / 2;
+          d = `M ${fx} ${fy} C ${fx} ${my}, ${tx} ${my}, ${tx} ${ty}`;
+        } else {
+          const mx = (fx + tx) / 2;
+          d = `M ${fx} ${fy} C ${mx} ${fy}, ${mx} ${ty}, ${tx} ${ty}`;
+        }
 
         const path = document.createElementNS(SVGNS, 'path');
         path.setAttribute('d', d);
@@ -145,7 +145,7 @@
         path.setAttribute('stroke-linecap', 'round');
 
         const cs     = getComputedStyle(document.getElementById('portfolio-root'));
-        const stroke = sideKey === 'L' ? cs.getPropertyValue('--research').trim()
+        const stroke = sideKey === 'T' ? cs.getPropertyValue('--research').trim()
                      : sideKey === 'R' ? cs.getPropertyValue('--industry').trim()
                      : cs.getPropertyValue('--overlap').trim();
         path.setAttribute('stroke', stroke);
@@ -157,19 +157,9 @@
         ribbonsSvg.appendChild(path);
       };
 
-      // Only draw ribbons for the active side.
-      if (side === 'L') {
-        cards.filter(c => c.dataset.side === 'L')
-             .forEach(c => mk(anchors.L, c, 'L', c.dataset.id));
-      } else if (side === 'R') {
-        cards.filter(c => c.dataset.side === 'R')
-             .forEach(c => mk(anchors.R, c, 'R', c.dataset.id));
-      } else if (side === 'C') {
-        const c1 = cards.find(c => c.dataset.id === 'C1');
-        const c2 = cards.find(c => c.dataset.id === 'C2');
-        mk(anchors.CT, c1, 'C', 'C1');
-        mk(anchors.CB, c2, 'C', 'C2');
-      }
+      // Draw ribbons from the active side's anchor to every card on that side.
+      const sideCards = cards.filter(c => c.dataset.side === side);
+      sideCards.forEach(c => mk(anchors[side], c, side, c.dataset.id));
     }
 
     // Make the ribbons SVG's viewBox match the stage's pixel
@@ -187,8 +177,8 @@
       c.addEventListener('mouseenter', () => { hover = c.dataset.id;    render(); });
       c.addEventListener('mouseleave', () => { hover = null;            render(); });
     });
-    // Circles + intersection ellipse
-    ['L', 'R', 'C'].forEach(sideKey => {
+    // Circles
+    ['T', 'L', 'R'].forEach(sideKey => {
       const el = circles[sideKey];
       if (!el) return;
       el.addEventListener('mouseenter', () => { hover  = sideKey; render(); });

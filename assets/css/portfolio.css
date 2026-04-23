@@ -8,15 +8,15 @@
   --ink: #0d0e12;
   --ink2: #14161c;
   --ink3: #1a1d25;
-  --line: #22252f;
-  --line2: #2d3140;
-  --fg: #e8e6df;
-  --mute: #9094a3;
-  --dim: #5e6272;
-  --research: #6a8ea0;
-  --industry: #9a6450;
-  --overlap: #a89a87;
-  --accent: #c6b98e;
+  --line: #2a2e3a;
+  --line2: #3a3f4f;
+  --fg: #f1efe8;
+  --mute: #c1c4cf;
+  --dim: #8a8e9c;
+  --research: #8bb3c7;
+  --industry: #c08668;
+  --overlap: #c8b9a3;
+  --accent: #d8c68f;
 
   /* Semantic border / surface tokens that flip with theme */
   --hairline:          rgba(255,255,255,0.08);
@@ -28,15 +28,20 @@
   --pill-pinned-bg:    rgba(255,255,255,0.05);
   --pill-pinned-bdr:   rgba(255,255,255,0.15);
 
-  --serif: "EB Garamond", Georgia, serif;
+  /* Note: --serif intentionally points to the sans stack — the site
+     reads more cleanly in sans across the board. The var name is
+     kept so every existing `font-family: var(--serif)` reference
+     continues to work. */
+  --serif: Inter, system-ui, sans-serif;
   --sans:  Inter, system-ui, sans-serif;
   --mono:  "JetBrains Mono", ui-monospace, monospace;
 
   color: var(--fg);
   font-family: var(--sans);
+  font-size: 16.5px;
   -webkit-font-smoothing: antialiased;
   font-feature-settings: "kern";
-  line-height: 1.5;
+  line-height: 1.55;
 }
 
 /* ── Light mode overrides ────────────────────────────────── */
@@ -218,7 +223,14 @@ html:has(#portfolio-root[data-theme="light"]) ::-webkit-scrollbar-thumb { backgr
 .pf-lede { color: var(--mute); font-size: 14px; line-height: 1.6; max-width: 38ch; text-wrap: pretty; }
 
 .pf-ink--mute     { color: var(--mute); font-style: italic; }
-.pf-ink--research { color: var(--research); }
+.pf-ink--research { color: var(--accent); }
+
+/* Hide the "research · l1" / "methods · r2" card-bar labels,
+   the pill legend above the Venn, and the three caption tiles
+   below — they add noise. */
+.pf-venn__stage .pf-card__bar .pf-smallcaps,
+.pf-venn__legend,
+.pf-venn__captions { display: none !important; }
 
 .pf-h2 {
   margin: 0.75rem 0 0;

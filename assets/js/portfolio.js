@@ -459,10 +459,10 @@
     if (!canvas || !canvas.getContext) return;
     const ctx = canvas.getContext('2d');
 
-    const COUNT        = 65;
-    const CONNECT_DIST = 175;
+    const COUNT        = 80;
+    const CONNECT_DIST = 185;
     const CURSOR_DIST  = 110;
-    const BASE_SPEED   = 0.35;
+    const BASE_SPEED   = 0.6;
 
     let W, H, nodes;
     const mouse = { x: -9999, y: -9999 };
@@ -541,7 +541,7 @@
           const dy = nodes[i].y - nodes[j].y;
           const d  = Math.sqrt(dx * dx + dy * dy);
           if (d < CONNECT_DIST) {
-            const alpha = (1 - d / CONNECT_DIST) * (dark ? 0.18 : 0.13);
+            const alpha = (1 - d / CONNECT_DIST) * (dark ? 0.32 : 0.22);
             ctx.beginPath();
             ctx.strokeStyle = `rgba(${nr},${ng},${nb},${alpha})`;
             ctx.lineWidth = 0.8;
@@ -553,7 +553,7 @@
       }
 
       // Draw nodes
-      const nodeAlpha = dark ? 0.5 : 0.35;
+      const nodeAlpha = dark ? 0.75 : 0.5;
       for (let i = 0; i < nodes.length; i++) {
         const n = nodes[i];
         ctx.beginPath();

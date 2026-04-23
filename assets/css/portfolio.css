@@ -459,6 +459,47 @@ html:has(#portfolio-root[data-theme="light"]) ::-webkit-scrollbar-thumb { backgr
 }
 .pf-venn__summary em { font-style: italic; color: var(--accent); }
 
+/* Collaborations callout — lives inside the Research section,
+   styled as a first-class framed note with a research-blue
+   left rule so it reads as research content, not a hero ad. */
+.pf-collab {
+  position: relative;
+  margin: 0 0 1.75rem;
+  padding: 1.1rem 1.25rem 1.2rem;
+  border: 1px solid color-mix(in oklab, var(--line) 70%, transparent);
+  border-left: 2px solid var(--research);
+  border-radius: 2px;
+  background: color-mix(in oklab, var(--ink2) 40%, transparent);
+  max-width: 64rem;
+}
+.pf-collab__head {
+  display: flex; align-items: baseline; justify-content: space-between;
+  gap: 1rem; flex-wrap: wrap;
+  margin-bottom: 0.45rem;
+}
+.pf-collab__meta {
+  color: var(--research);
+  font-size: 11.5px;
+  letter-spacing: 0.08em;
+}
+.pf-collab__h {
+  margin: 0 0 0.55rem;
+  font-weight: 400;
+  font-size: 19px;
+  line-height: 1.25;
+  color: var(--fg);
+  letter-spacing: -0.005em;
+}
+.pf-collab__p {
+  margin: 0;
+  color: color-mix(in oklab, var(--fg) 88%, transparent);
+  font-size: 15.5px;
+  line-height: 1.6;
+  text-wrap: pretty;
+}
+.pf-collab__p em     { font-style: italic; }
+.pf-collab__p strong { color: var(--research); font-weight: 500; }
+
 .pf-venn__legend {
   display: flex; flex-wrap: wrap; align-items: center; gap: 0.5rem;
   margin-bottom: 1.25rem; font-size: 12px;
@@ -722,6 +763,16 @@ html:has(#portfolio-root[data-theme="light"]) ::-webkit-scrollbar-thumb { backgr
 .pf-talk__venue em { font-style: italic; }
 
 /* ── Teaching ───────────────────────────────────────────── */
+.pf-teach__summary {
+  margin: 1rem 0 1.5rem;
+  max-width: 64ch;
+  color: color-mix(in oklab, var(--fg) 85%, transparent);
+  font-size: 15px;
+  line-height: 1.6;
+  text-wrap: pretty;
+}
+.pf-teach__summary em { font-style: italic; color: var(--accent); }
+
 .pf-teach__grid {
   display: grid; grid-template-columns: 1fr; gap: 1.25rem;
 }

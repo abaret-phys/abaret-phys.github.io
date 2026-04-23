@@ -28,13 +28,13 @@
   --pill-pinned-bg:    rgba(255,255,255,0.05);
   --pill-pinned-bdr:   rgba(255,255,255,0.15);
 
-  /* Note: --serif intentionally points to the sans stack — the site
-     reads more cleanly in sans across the board. The var name is
-     kept so every existing `font-family: var(--serif)` reference
-     continues to work. */
-  --serif: Inter, system-ui, sans-serif;
-  --sans:  Inter, system-ui, sans-serif;
-  --mono:  "JetBrains Mono", ui-monospace, monospace;
+  /* Note: --serif intentionally points to the sans stack — body
+     text reads more cleanly in sans across the board. Headings
+     and titles use --display (EB Garamond) via dedicated rules. */
+  --serif:   Inter, system-ui, sans-serif;
+  --sans:    Inter, system-ui, sans-serif;
+  --display: "EB Garamond", Georgia, serif;
+  --mono:    "JetBrains Mono", ui-monospace, monospace;
 
   color: var(--fg);
   font-family: var(--sans);
@@ -225,6 +225,21 @@ html:has(#portfolio-root[data-theme="light"]) ::-webkit-scrollbar-thumb { backgr
 .pf-ink--mute     { color: var(--mute); font-style: italic; }
 .pf-ink--research { color: var(--accent); }
 
+/* Display face — EB Garamond, for headings/titles only.
+   Body text stays in sans (via --serif alias) for readability.
+   !important because individual heading rules below still set
+   font-family: var(--serif) (the sans alias), and would win on
+   source order otherwise. */
+.pf-hero__name,
+.pf-hero__title,
+.pf-h2,
+.pf-nav__name,
+.pf-card__title,
+.pf-notice__h,
+.pf-course__name,
+.pf-cv-card__h,
+.pf-venn__summary p em { font-family: var(--display) !important; }
+
 /* Hide the "research · l1" / "methods · r2" card-bar labels,
    the pill legend above the Venn, and the three caption tiles
    below — they add noise. */
@@ -269,6 +284,10 @@ html:has(#portfolio-root[data-theme="light"]) ::-webkit-scrollbar-thumb { backgr
   transition: color 0.2s;
 }
 .pf-nav__links a:hover { color: var(--fg); }
+.pf-nav__links a.is-active {
+  color: var(--accent);
+  box-shadow: inset 0 -2px 0 color-mix(in oklab, var(--accent) 75%, transparent);
+}
 
 .pf-btn {
   display: inline-block; font-size: 12.5px;
@@ -392,7 +411,7 @@ html:has(#portfolio-root[data-theme="light"]) ::-webkit-scrollbar-thumb { backgr
 @media (min-width: 768px) {
   .pf-row { grid-template-columns: 2fr 2fr 8fr; }
 }
-.pf-row__date { font-size: 11px; color: var(--mute); padding-top: 3px; }
+.pf-row__date { font-size: 13px; color: var(--mute); padding-top: 3px; }
 .pf-row__tag  { font-size: 11.5px; font-family: var(--mono); color: var(--accent); padding-top: 3px; }
 .pf-row__body { font-family: var(--serif); font-size: 15.5px; line-height: 1.55; color: color-mix(in oklab, var(--fg) 90%, transparent); text-wrap: pretty; }
 
@@ -405,7 +424,7 @@ html:has(#portfolio-root[data-theme="light"]) ::-webkit-scrollbar-thumb { backgr
 @media (min-width: 768px) {
   .pf-edu { grid-template-columns: 2fr 10fr; gap: 1.25rem; }
 }
-.pf-edu__year  { font-size: 11px; color: var(--mute); padding-top: 3px; }
+.pf-edu__year  { font-size: 13px; color: var(--mute); padding-top: 3px; }
 .pf-edu__main  { font-family: var(--serif); }
 .pf-edu__degree { font-size: 16.5px; color: color-mix(in oklab, var(--fg) 92%, transparent); line-height: 1.4; }
 .pf-edu__name  { color: var(--fg); }
@@ -657,7 +676,7 @@ html:has(#portfolio-root[data-theme="light"]) ::-webkit-scrollbar-thumb { backgr
   .pf-pub { grid-template-columns: 1fr 2fr 9fr; }
 }
 .pf-pub__n  { font-family: var(--mono); font-size: 11px; color: var(--dim); padding-top: 3px; }
-.pf-pub__y  { font-size: 11px; color: var(--mute); padding-top: 3px; }
+.pf-pub__y  { font-size: 13px; color: var(--mute); padding-top: 3px; }
 .pf-pub__body { font-family: var(--serif); }
 .pf-pub__cite {
   font-size: 15.5px; line-height: 1.55;
@@ -691,8 +710,8 @@ html:has(#portfolio-root[data-theme="light"]) ::-webkit-scrollbar-thumb { backgr
 @media (min-width: 768px) {
   .pf-talk { grid-template-columns: 1fr 2fr 9fr; }
 }
-.pf-talk__year { font-size: 11px; color: var(--mute); padding-top: 3px; }
-.pf-talk__kind { font-size: 11.5px; font-family: var(--mono); padding-top: 3px; }
+.pf-talk__year { font-size: 13px; color: var(--mute); padding-top: 3px; }
+.pf-talk__kind { font-size: 13px; font-family: var(--mono); padding-top: 3px; }
 .pf-talk__kind[data-kind="Invited"]     { color: var(--accent); }
 .pf-talk__kind[data-kind="Poster"]      { color: var(--mute); }
 .pf-talk__kind[data-kind="Seminar"]     { color: var(--research); }
@@ -719,7 +738,7 @@ html:has(#portfolio-root[data-theme="light"]) ::-webkit-scrollbar-thumb { backgr
   display: flex; align-items: baseline; justify-content: space-between; gap: 1rem;
 }
 .pf-course__code { font-family: var(--mono); font-size: 11px; color: var(--accent); }
-.pf-course__term { font-size: 10.5px; color: var(--mute); }
+.pf-course__term { font-size: 12.5px; color: var(--mute); }
 .pf-course__name { margin: 0.5rem 0 0; font-family: var(--serif); font-weight: 400; font-size: 18px; line-height: 1.2; color: var(--fg); }
 .pf-course__role { margin-top: 0.125rem; font-size: 12.5px; font-style: italic; color: var(--research); }
 .pf-course__note { margin-top: 0.75rem; font-size: 13px; color: var(--mute); line-height: 1.55; text-wrap: pretty; }
@@ -730,7 +749,7 @@ html:has(#portfolio-root[data-theme="light"]) ::-webkit-scrollbar-thumb { backgr
 .pf-awards__col-head { display: flex; align-items: center; gap: 0.75rem; margin-bottom: 0.75rem; color: var(--mute); font-size: 11px; }
 .pf-awards__col-head .pf-n { display: none; }
 .pf-award { display: grid; grid-template-columns: 2fr 10fr; gap: 0.75rem; padding-block: 1rem; }
-.pf-award__y    { font-size: 11px; color: var(--mute); padding-top: 2px; }
+.pf-award__y    { font-size: 13px; color: var(--mute); padding-top: 2px; }
 .pf-award__body { font-family: var(--serif); }
 .pf-award__t    { font-size: 15.5px; color: color-mix(in oklab, var(--fg) 90%, transparent); line-height: 1.2; }
 .pf-award__d    { margin-top: 0.25rem; font-size: 13px; font-style: italic; color: var(--mute); line-height: 1.55; text-wrap: pretty; }
@@ -743,7 +762,7 @@ html:has(#portfolio-root[data-theme="light"]) ::-webkit-scrollbar-thumb { backgr
 @media (min-width: 768px) {
   .pf-ind { grid-template-columns: 2fr 4fr 6fr; }
 }
-.pf-ind__y    { font-size: 11px; color: var(--mute); padding-top: 3px; }
+.pf-ind__y    { font-size: 13px; color: var(--mute); padding-top: 3px; }
 .pf-ind__org  { font-family: var(--serif); font-size: 16px; color: var(--fg); }
 .pf-ind__role { display: block; margin-top: 0.15rem; font-size: 12.5px; font-style: italic; color: var(--industry); }
 .pf-ind__note { font-size: 13.5px; color: var(--mute); line-height: 1.55; text-wrap: pretty; padding-top: 2px; }

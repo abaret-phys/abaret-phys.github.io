@@ -21,6 +21,62 @@
     initParticles();
     initVenn();
     initPublications();
+    initScrollSpy();
+  }
+
+  /* ═══════════════════════════════════════════════════════════
+     SCROLL SPY
+     Highlights the nav link of whichever section is currently
+     near the top of the viewport. Note: "Output" in the nav
+     points at #publications but should also light up for #talks,
+     since those two sections were merged in the nav. We track
+     every section that has an id + a matching nav entry, plus a
+     synonym map for the collapsed entry.
+     ═══════════════════════════════════════════════════════════ */
+
+  function initScrollSpy () {
+    const navLinks = Array.from(document.querySelectorAll('.pf-nav__links a[href^="#"]'));
+    if (!navLinks.length || !('IntersectionObserver' in window)) return;
+
+    // Build id -> link map. For "Output" (→ #publications), also
+    // accept #talks so that scrolling through Talks keeps it lit.
+    const linkByHref = new Map();
+    navLinks.forEach(a => linkByHref.set(a.getAttribute('href').slice(1), a));
+    if (linkByHref.has('publications')) {
+      linkByHref.set('talks', linkByHref.get('publications'));
+    }
+
+    const targets = Array.from(linkByHref.keys())
+      .map(id => document.getElementById(id))
+      .filter(Boolean);
+    if (!targets.length) return;
+
+    // Track intersection ratios; pick the section most visible
+    // near the top of the viewport and mark its link active.
+    const visible = new Map();
+    const setActive = id => {
+      navLinks.forEach(a => a.classList.remove('is-active'));
+      const link = linkByHref.get(id);
+      if (link) link.classList.add('is-active');
+    };
+
+    const io = new IntersectionObserver(entries => {
+      entries.forEach(e => {
+        if (e.isIntersecting) visible.set(e.target.id, e.intersectionRatio);
+        else visible.delete(e.target.id);
+      });
+      if (!visible.size) return;
+      // Pick the section with the largest visible ratio.
+      let best = null, bestRatio = -1;
+      visible.forEach((r, id) => { if (r > bestRatio) { bestRatio = r; best = id; } });
+      if (best) setActive(best);
+    }, {
+      // Trigger when a section crosses the upper third of the viewport.
+      rootMargin: '-20% 0px -60% 0px',
+      threshold: [0, 0.25, 0.5, 0.75, 1],
+    });
+
+    targets.forEach(el => io.observe(el));
   }
 
   /* ═══════════════════════════════════════════════════════════

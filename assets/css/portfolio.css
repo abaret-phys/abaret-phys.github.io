@@ -737,7 +737,9 @@ html:has(#portfolio-root[data-theme="light"]) ::-webkit-scrollbar-thumb { backgr
 .pf-course__head {
   display: flex; align-items: baseline; justify-content: space-between; gap: 1rem;
 }
-.pf-course__code { font-family: var(--mono); font-size: 11px; color: var(--accent); }
+.pf-course__code,
+#portfolio-root a.pf-course__code { font-family: var(--mono); font-size: 11px; color: var(--accent); text-decoration: none; transition: opacity 0.2s; }
+#portfolio-root a.pf-course__code:hover { opacity: 0.75; text-decoration: underline; text-underline-offset: 2px; }
 .pf-course__term { font-size: 12.5px; color: var(--mute); }
 .pf-course__name { margin: 0.5rem 0 0; font-family: var(--serif); font-weight: 400; font-size: 18px; line-height: 1.2; color: var(--fg); }
 .pf-course__role { margin-top: 0.125rem; font-size: 12.5px; font-style: italic; color: var(--research); }

@@ -27,24 +27,17 @@
   /* ═══════════════════════════════════════════════════════════
      SCROLL SPY
      Highlights the nav link of whichever section is currently
-     near the top of the viewport. Note: "Output" in the nav
-     points at #publications but should also light up for #talks,
-     since those two sections were merged in the nav. We track
-     every section that has an id + a matching nav entry, plus a
-     synonym map for the collapsed entry.
+     near the top of the viewport. Each nav href points at a
+     unique section id, so the mapping is 1:1.
      ═══════════════════════════════════════════════════════════ */
 
   function initScrollSpy () {
     const navLinks = Array.from(document.querySelectorAll('.pf-nav__links a[href^="#"]'));
     if (!navLinks.length || !('IntersectionObserver' in window)) return;
 
-    // Build id -> link map. For "Output" (→ #publications), also
-    // accept #talks so that scrolling through Talks keeps it lit.
+    // Build id -> link map.
     const linkByHref = new Map();
     navLinks.forEach(a => linkByHref.set(a.getAttribute('href').slice(1), a));
-    if (linkByHref.has('publications')) {
-      linkByHref.set('talks', linkByHref.get('publications'));
-    }
 
     const targets = Array.from(linkByHref.keys())
       .map(id => document.getElementById(id))
@@ -315,6 +308,12 @@
       venue: 'Nanoscale', volume: '16, 8361–8368',
       topics: ['percolation', 'nanowires', 'transport'], selected: true,
       doi: '10.1039/d3nr05850f' },
+    { y: 2022,
+      authors: ['A. Baret'],
+      title: 'Numerical investigation of low-density metallic nanowire networks as a cure for defective transparent conducting materials',
+      venue: 'MSc Thesis — University of Liège', volume: 'summa cum laude',
+      topics: ['percolation', 'nanowires', 'thesis'],
+      url: 'https://matheo.uliege.be/handle/2268.2/14793' },
   ];
 
   const ALL_TOPICS = Array.from(new Set(PUBS.flatMap(p => p.topics))).sort();
@@ -445,6 +444,9 @@
       if (p.doi) {
         addSep();
         addLink(`https://doi.org/${p.doi}`, `doi:${p.doi} ↗`);
+      } else if (p.url) {
+        addSep();
+        addLink(p.url, 'link ↗');
       }
       addSep(); addLink('#', 'BibTeX');
       addSep(); addLink('#', 'PDF');

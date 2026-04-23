@@ -74,6 +74,20 @@
 #portfolio-root[data-theme="light"] #pf-venn-svg text { fill: var(--fg); }
 #portfolio-root[data-theme="light"] #pf-venn-svg rect { fill: var(--ink2); stroke: var(--overlap); }
 
+/* Venn circles in light mode — the SVG <defs> gradients use the
+   dark-theme hexes at low alpha, which wash out on the beige
+   background. Override stroke color/width and add a subtle fill
+   via filter so the circles actually read. */
+#portfolio-root[data-theme="light"] #pf-venn-T { stroke: var(--research); stroke-width: 1.75; }
+#portfolio-root[data-theme="light"] #pf-venn-L { stroke: var(--overlap);  stroke-width: 1.75; }
+#portfolio-root[data-theme="light"] #pf-venn-R { stroke: var(--industry); stroke-width: 1.75; }
+#portfolio-root[data-theme="light"] #pf-venn-svg {
+  filter: contrast(1.15) saturate(1.25);
+}
+#portfolio-root[data-theme="light"] .pf-venn__svg.side-T #pf-venn-T,
+#portfolio-root[data-theme="light"] .pf-venn__svg.side-L #pf-venn-L,
+#portfolio-root[data-theme="light"] .pf-venn__svg.side-R #pf-venn-R { stroke-width: 2.25; }
+
 /* Body carries the gradient so the canvas can sit in front of it */
 body:has(#portfolio-root) {
   background:
@@ -263,13 +277,18 @@ html:has(#portfolio-root[data-theme="light"]) ::-webkit-scrollbar-thumb { backgr
 /* ── Nav ─────────────────────────────────────────────────── */
 .pf-nav {
   position: sticky; top: 0; z-index: 40;
-  border-bottom: 1px solid color-mix(in oklab, var(--line) 60%, transparent);
-  backdrop-filter: blur(8px);
-  background: color-mix(in oklab, var(--ink) 85%, transparent);
+  border-bottom: 1px solid color-mix(in oklab, var(--accent) 55%, transparent);
+  backdrop-filter: blur(14px) saturate(160%);
+  -webkit-backdrop-filter: blur(14px) saturate(160%);
+  /* Lifted plane: base on --ink3 (the lightest dark token) with
+     a cool --research tint, so the nav sits clearly above the
+     near-black body without reading brown or neutral grey. */
+  background: color-mix(in oklab, var(--ink3) 82%, var(--research) 18%);
+  box-shadow: 0 6px 24px -8px rgba(0, 0, 0, 0.65);
 }
 .pf-nav__row {
   display: flex; align-items: center; justify-content: space-between;
-  height: 3.5rem;
+  height: 3.75rem;
 }
 .pf-nav__brand { display: flex; align-items: baseline; gap: 0.75rem; }
 .pf-nav__name  { font-family: var(--serif); font-size: 19px; letter-spacing: -0.01em; color: var(--fg); }
@@ -278,12 +297,17 @@ html:has(#portfolio-root[data-theme="light"]) ::-webkit-scrollbar-thumb { backgr
 .pf-nav__links { display: none; gap: 0.1rem; align-items: center; }
 @media (min-width: 768px) { .pf-nav__links { display: flex; } }
 .pf-nav__links a {
-  padding: 0.375rem 0.75rem;
-  font-size: 13px;
-  color: var(--mute);
-  transition: color 0.2s;
+  padding: 0.5rem 0.85rem;
+  font-size: 14px;
+  font-weight: 500;
+  color: color-mix(in oklab, var(--fg) 82%, transparent);
+  transition: color 0.2s, background 0.2s;
+  border-radius: 3px;
 }
-.pf-nav__links a:hover { color: var(--fg); }
+.pf-nav__links a:hover {
+  color: var(--fg);
+  background: color-mix(in oklab, var(--accent) 10%, transparent);
+}
 .pf-nav__links a.is-active {
   color: var(--accent);
   box-shadow: inset 0 -2px 0 color-mix(in oklab, var(--accent) 75%, transparent);

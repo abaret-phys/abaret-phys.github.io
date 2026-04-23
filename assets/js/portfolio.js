@@ -217,6 +217,12 @@
   // Source-of-truth data — sourced from ORBi (u236047).
   // Ordered from most recent to oldest.
   const PUBS = [
+    { y: 2026,
+      authors: ['A. Baret', 'A. Khan', 'S. Akin', 'L. Teulé-Gay', 'D. Bellet', 'A. Rougier', 'N. D. Nguyen'],
+      title: 'Challenges and mitigation pathways in coating silver nanowire networks with metallic oxides by RF magnetron sputtering',
+      venue: 'arXiv preprint', volume: '2604.09372',
+      topics: ['thin films', 'nanowires'],
+      doi: '10.48550/arXiv.2604.09372' },
     { y: 2025,
       authors: ['A. Baret', 'J. Baumgarten', 'F. Balty', 'F. Rabecki', 'J. Brisbois', 'B. Zheng', 'D. Bellet', 'N. D. Nguyen'],
       title: 'The refractive index of silver nanowire networks: a heuristic approach to the foundations of the optical constants, from experiment to theory',

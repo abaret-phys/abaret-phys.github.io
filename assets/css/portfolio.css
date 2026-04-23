@@ -314,8 +314,10 @@ html:has(#portfolio-root[data-theme="light"]) ::-webkit-scrollbar-thumb { backgr
 }
 .pf-hero__title {
   margin: 0.75rem 0 0; max-width: 62ch;
-  font-family: var(--serif);
-  font-size: clamp(18px, 2.2vw, 22px);
+  /* Intentional override: use EB Garamond only for this line,
+     since the rest of the site moved to sans. */
+  font-family: "EB Garamond", Georgia, serif;
+  font-size: clamp(20px, 2.4vw, 24px);
   color: var(--mute);
 }
 .pf-hero__title em { font-style: italic; }
@@ -726,6 +728,7 @@ html:has(#portfolio-root[data-theme="light"]) ::-webkit-scrollbar-thumb { backgr
 .pf-awards__cols { display: grid; grid-template-columns: 1fr; gap: 2.5rem; }
 @media (min-width: 1024px) { .pf-awards__cols { grid-template-columns: 1fr 1fr; } }
 .pf-awards__col-head { display: flex; align-items: center; gap: 0.75rem; margin-bottom: 0.75rem; color: var(--mute); font-size: 11px; }
+.pf-awards__col-head .pf-n { display: none; }
 .pf-award { display: grid; grid-template-columns: 2fr 10fr; gap: 0.75rem; padding-block: 1rem; }
 .pf-award__y    { font-size: 11px; color: var(--mute); padding-top: 2px; }
 .pf-award__body { font-family: var(--serif); }

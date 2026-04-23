@@ -464,7 +464,7 @@ html:has(#portfolio-root[data-theme="light"]) ::-webkit-scrollbar-thumb { backgr
    left rule so it reads as research content, not a hero ad. */
 .pf-collab {
   position: relative;
-  margin: 0 0 1.75rem;
+  margin: 2rem 0 1.75rem;
   padding: 1.1rem 1.25rem 1.2rem;
   border: 1px solid color-mix(in oklab, var(--line) 70%, transparent);
   border-left: 2px solid var(--research);

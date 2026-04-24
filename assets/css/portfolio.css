@@ -950,6 +950,12 @@ html:has(#portfolio-root[data-theme="light"]) ::-webkit-scrollbar-thumb { backgr
   .pf-venn__top    { gap: 1rem; }
   .pf-card--compact { max-width: none; flex: 1 1 auto; }
 
+  /* Reorder on phone: research (T, inside center) first, then
+     computational methods (R), then experimental skills (L). */
+  .pf-venn__row > .pf-venn__center      { order: 1; }
+  .pf-venn__row > .pf-venn__col[data-side="R"] { order: 2; }
+  .pf-venn__row > .pf-venn__col[data-side="L"] { order: 3; }
+
   /* Every card is always fully visible on mobile — no hover
      machinery, no dimmed resting state, no horizontal offsets. */
   .pf-card {
@@ -1041,6 +1047,7 @@ html:has(#portfolio-root[data-theme="light"]) ::-webkit-scrollbar-thumb { backgr
   .pf-pubs__list,
   .pf-talks,
   .pf-teach__grid,
+  .pf-venn__row,
   #awards .pf-awards__cols > div ul,
   #beyond .pf-list {
     position: relative;
@@ -1064,18 +1071,18 @@ html:has(#portfolio-root[data-theme="light"]) ::-webkit-scrollbar-thumb { backgr
      using sticky positioning so it stays in view while scrolling. */
   .pf-pubs__list::before,
   .pf-talks::before,
+  .pf-teach__grid::before,
+  .pf-venn__row::before,
   #awards .pf-awards__cols > div ul::before,
   #beyond .pf-list::before {
     content: "scroll ↓";
-    position: sticky;
+    position: absolute;
     top: 0.35rem;
-    float: right;
-    margin-right: 0.35rem;
-    margin-bottom: -1.75rem;
+    right: 0.35rem;
     z-index: 2;
-    padding: 2px 7px;
+    padding: 1px 5px;
     font-family: var(--mono);
-    font-size: 10px;
+    font-size: 9px;
     letter-spacing: 0.04em;
     color: var(--mute);
     background: color-mix(in oklab, var(--ink3) 85%, transparent);
@@ -1092,16 +1099,19 @@ html:has(#portfolio-root[data-theme="light"]) ::-webkit-scrollbar-thumb { backgr
   #awards .pf-awards__cols > div ul > li,
   #beyond .pf-list > li { padding: 0.75rem; }
   .pf-teach__grid { padding: 0.25rem; }
+  .pf-venn__row   { padding: 0.5rem; gap: 0.75rem; }
 
   /* Slim the scrollbar so it reads as a subtle indicator. */
   .pf-pubs__list::-webkit-scrollbar,
   .pf-talks::-webkit-scrollbar,
   .pf-teach__grid::-webkit-scrollbar,
+  .pf-venn__row::-webkit-scrollbar,
   #awards .pf-awards__cols > div ul::-webkit-scrollbar,
   #beyond .pf-list::-webkit-scrollbar { width: 4px; }
   .pf-pubs__list::-webkit-scrollbar-thumb,
   .pf-talks::-webkit-scrollbar-thumb,
   .pf-teach__grid::-webkit-scrollbar-thumb,
+  .pf-venn__row::-webkit-scrollbar-thumb,
   #awards .pf-awards__cols > div ul::-webkit-scrollbar-thumb,
   #beyond .pf-list::-webkit-scrollbar-thumb {
     background: color-mix(in oklab, var(--mute) 50%, transparent);

@@ -22,6 +22,21 @@
     initVenn();
     initPublications();
     initScrollSpy();
+    initNavMenu();
+  }
+
+  /* ═══════════════════════════════════════════════════════════
+     MOBILE NAV MENU
+     The <details>-based burger toggle on mobile needs to close
+     itself when the user taps a link (otherwise the dropdown
+     stays open, covering the section they just jumped to).
+     ═══════════════════════════════════════════════════════════ */
+  function initNavMenu () {
+    const menu = document.querySelector('.pf-nav__menu');
+    if (!menu) return;
+    menu.addEventListener('click', e => {
+      if (e.target.tagName === 'A') menu.open = false;
+    });
   }
 
   /* ═══════════════════════════════════════════════════════════
@@ -32,6 +47,12 @@
      ═══════════════════════════════════════════════════════════ */
 
   function initScrollSpy () {
+    // On mobile the nav is collapsed into a burger menu — the
+    // active-link indicator is never visible, so skip the
+    // observer entirely to avoid needless repaints that have
+    // been observed to stutter scrolling at the top of the page.
+    if (window.matchMedia('(max-width: 640px)').matches) return;
+
     const navLinks = Array.from(document.querySelectorAll('.pf-nav__links a[href^="#"]'));
     if (!navLinks.length || !('IntersectionObserver' in window)) return;
 

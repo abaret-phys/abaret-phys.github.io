@@ -1,6 +1,6 @@
 # abaret.github.io
 
-A modern, single-page academic CV / portfolio for **Amaury Baret** — condensed-matter physicist working on stochastic media, metallic nanowire networks, and thermochromic coatings.
+A modern, single-page academic CV / portfolio for (but not restricted too) PhD students
 
 The site is a hand-rolled departure from the usual academic-pages template: one long editorial page, dark by default, with a custom three-circle Venn diagram that cross-links research themes with experimental and computational skills.
 

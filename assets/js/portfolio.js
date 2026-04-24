@@ -517,7 +517,9 @@
 
     const stored = localStorage.getItem('pf-theme');
     const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-    const isDark = stored ? stored === 'dark' : prefersDark !== false;
+    const isMobile = window.matchMedia('(max-width: 640px)').matches;
+    // Phone: always default to dark. Desktop: follow system (default dark).
+    const isDark = stored ? stored === 'dark' : (isMobile ? true : prefersDark !== false);
 
     applyTheme(isDark);
 
@@ -546,10 +548,13 @@
     if (!canvas || !canvas.getContext) return;
     const ctx = canvas.getContext('2d');
 
-    const COUNT        = 80;
+    const isMobile = window.matchMedia('(max-width: 640px)').matches;
+    const COUNT        = isMobile ? 28 : 80;
     const CONNECT_DIST = 185;
     const CURSOR_DIST  = 110;
     const BASE_SPEED   = 0.6;
+    // Dim multiplier so phone nodes/edges recede into the background.
+    const DIM          = isMobile ? 0.35 : 1;
 
     let W, H, nodes;
     const mouse = { x: -9999, y: -9999 };
@@ -628,7 +633,7 @@
           const dy = nodes[i].y - nodes[j].y;
           const d  = Math.sqrt(dx * dx + dy * dy);
           if (d < CONNECT_DIST) {
-            const alpha = (1 - d / CONNECT_DIST) * (dark ? 0.32 : 0.22);
+            const alpha = (1 - d / CONNECT_DIST) * (dark ? 0.32 : 0.22) * DIM;
             ctx.beginPath();
             ctx.strokeStyle = `rgba(${nr},${ng},${nb},${alpha})`;
             ctx.lineWidth = 0.8;
@@ -640,7 +645,7 @@
       }
 
       // Draw nodes
-      const nodeAlpha = dark ? 0.75 : 0.5;
+      const nodeAlpha = (dark ? 0.75 : 0.5) * DIM;
       for (let i = 0; i < nodes.length; i++) {
         const n = nodes[i];
         ctx.beginPath();

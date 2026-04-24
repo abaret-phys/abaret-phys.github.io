@@ -1043,6 +1043,7 @@ html:has(#portfolio-root[data-theme="light"]) ::-webkit-scrollbar-thumb { backgr
   .pf-teach__grid,
   #awards .pf-awards__cols > div ul,
   #beyond .pf-list {
+    position: relative;
     max-height: 60vh;
     overflow-y: auto;
     -webkit-overflow-scrolling: touch;
@@ -1053,6 +1054,35 @@ html:has(#portfolio-root[data-theme="light"]) ::-webkit-scrollbar-thumb { backgr
     /* Fade-out mask at the bottom hints there's more content. */
     mask-image: linear-gradient(to bottom, black calc(100% - 24px), transparent);
     -webkit-mask-image: linear-gradient(to bottom, black calc(100% - 24px), transparent);
+  }
+
+  /* Scrollable-area cue: a small "scroll" badge pinned to the
+     top-right corner of each scrollable list, so users notice
+     the content extends below the visible window. The parent of
+     these lists gets the cue via a ::after on a wrapper — but
+     since these lists have no wrapper, put it on the list itself
+     using sticky positioning so it stays in view while scrolling. */
+  .pf-pubs__list::before,
+  .pf-talks::before,
+  #awards .pf-awards__cols > div ul::before,
+  #beyond .pf-list::before {
+    content: "scroll ↓";
+    position: sticky;
+    top: 0.35rem;
+    float: right;
+    margin-right: 0.35rem;
+    margin-bottom: -1.75rem;
+    z-index: 2;
+    padding: 2px 7px;
+    font-family: var(--mono);
+    font-size: 10px;
+    letter-spacing: 0.04em;
+    color: var(--mute);
+    background: color-mix(in oklab, var(--ink3) 85%, transparent);
+    border: 1px solid color-mix(in oklab, var(--line2) 70%, transparent);
+    border-radius: 10px;
+    pointer-events: none;
+    opacity: 0.85;
   }
   #awards .pf-awards__cols > div ul,
   #beyond .pf-list { max-height: 55vh; }

@@ -239,6 +239,15 @@ html:has(#portfolio-root[data-theme="light"]) ::-webkit-scrollbar-thumb { backgr
 .pf-ink--mute     { color: var(--mute); font-style: italic; }
 .pf-ink--research { color: var(--accent); }
 
+/* Inline link utility — accent-colored with a soft underline,
+   for places where a link should clearly read as clickable. */
+#portfolio-root a.pf-link {
+  color: var(--accent);
+  border-bottom: 1px solid color-mix(in oklab, var(--accent) 40%, transparent);
+  transition: border-color 0.2s;
+}
+#portfolio-root a.pf-link:hover { border-bottom-color: var(--accent); }
+
 /* Display face — EB Garamond, for headings/titles only.
    Body text stays in sans (via --serif alias) for readability.
    !important because individual heading rules below still set
@@ -251,8 +260,7 @@ html:has(#portfolio-root[data-theme="light"]) ::-webkit-scrollbar-thumb { backgr
 .pf-card__title,
 .pf-notice__h,
 .pf-course__name,
-.pf-cv-card__h,
-.pf-venn__summary p em { font-family: var(--display) !important; }
+.pf-cv-card__h { font-family: var(--display) !important; }
 
 /* Hide the "research · l1" / "methods · r2" card-bar labels,
    the pill legend above the Venn, and the three caption tiles
@@ -296,11 +304,15 @@ html:has(#portfolio-root[data-theme="light"]) ::-webkit-scrollbar-thumb { backgr
 @media (max-width: 640px) { .pf-nav__role { display: none; } }
 
 /* <details> is a semantic shell that only "toggles" on mobile.
-   On desktop it renders as a plain flex row exactly as before. */
+   On desktop we force it flat: content always visible regardless
+   of [open], burger hidden. The open/close gating lives inside
+   the mobile media query below. */
 .pf-nav__menu { display: contents; }
 .pf-nav__burger { display: none; }
 .pf-nav__links { display: none; gap: 0.1rem; align-items: center; }
-@media (min-width: 768px) { .pf-nav__links { display: flex; } }
+@media (min-width: 768px) {
+  .pf-nav__links { display: flex !important; }
+}
 .pf-nav__links a {
   padding: 0.5rem 0.85rem;
   font-size: 14px;

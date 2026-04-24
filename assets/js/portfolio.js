@@ -34,8 +34,16 @@
   function initNavMenu () {
     const menu = document.querySelector('.pf-nav__menu');
     if (!menu) return;
+    // <details> ships open so desktop always renders the links
+    // inline (via display: contents). On mobile, start closed so
+    // the burger toggle controls visibility.
+    const mobile = window.matchMedia('(max-width: 767px)');
+    const sync = () => { menu.open = !mobile.matches; };
+    sync();
+    mobile.addEventListener('change', sync);
+    // Close the dropdown after a link tap on mobile.
     menu.addEventListener('click', e => {
-      if (e.target.tagName === 'A') menu.open = false;
+      if (mobile.matches && e.target.tagName === 'A') menu.open = false;
     });
   }
 

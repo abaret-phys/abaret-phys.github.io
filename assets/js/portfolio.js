@@ -56,6 +56,29 @@
       );
     }
 
+    // Footer CV button — pulse when the contact/footer comes into view,
+    // mirroring the nav-bar CV pulse so the file is offered again at the
+    // bottom of the page once the visitor finishes reading.
+    const footerCv = document.getElementById('pf-footer-cv');
+    const contact  = document.getElementById('contact');
+    if (footerCv && contact && 'IntersectionObserver' in window) {
+      let firedFooter = false;
+      const ioFooter = new IntersectionObserver(entries => {
+        entries.forEach(e => {
+          if (!firedFooter && e.isIntersecting && e.intersectionRatio > 0.2) {
+            firedFooter = true;
+            footerCv.classList.add('pf-attn');
+            setTimeout(() => footerCv.classList.remove('pf-attn'), 7500);
+            ioFooter.disconnect();
+          }
+        });
+      }, { threshold: [0.2, 0.4] });
+      ioFooter.observe(contact);
+      ['click', 'mouseenter', 'focus'].forEach(ev =>
+        footerCv.addEventListener(ev, () => footerCv.classList.remove('pf-attn'), { once: true })
+      );
+    }
+
     // Venn toggle — pulse when the Research section comes into view.
     const toggle = document.querySelector('.pf-venn__toggle');
     const research = document.getElementById('research');

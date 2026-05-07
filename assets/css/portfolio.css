@@ -1243,6 +1243,18 @@ html:has(#portfolio-root[data-theme="light"]) ::-webkit-scrollbar-thumb { backgr
   .pf-hero__name { font-size: 38px; }
 }
 
+/* Education — visual gap + soft divider between the Degrees
+   block and the Additional-training block, so they read as
+   two distinct subsections rather than one rolling list. */
+.pf-edu__group--continued {
+  margin-top: 3.5rem;
+  padding-top: 3rem;
+  border-top: 1px solid var(--hairline-faint);
+}
+@media (max-width: 767px) {
+  .pf-edu__group--continued { margin-top: 2.25rem; padding-top: 2rem; }
+}
+
 /* ── Announcements ticker ──────────────────────────────────
    A thin strip below the hero. CSS-only marquee: the track
    contains the news items duplicated once and is translated
@@ -1323,11 +1335,23 @@ html:has(#portfolio-root[data-theme="light"]) ::-webkit-scrollbar-thumb { backgr
   letter-spacing: 0.06em;
 }
 .pf-ticker__body em { font-style: italic; color: var(--fg); }
-#portfolio-root .pf-ticker__body a {
-  color: var(--accent); text-decoration: none;
-  border-bottom: 1px solid color-mix(in oklab, var(--accent) 50%, transparent);
+#portfolio-root .pf-ticker__link {
+  display: inline-flex; align-items: baseline; gap: 0.6rem;
+  color: inherit; text-decoration: none;
+  padding: 2px 4px; margin: -2px -4px;
+  border-radius: 2px;
+  transition: background 0.18s, color 0.18s;
 }
-#portfolio-root .pf-ticker__body a:hover { color: var(--fg); }
+#portfolio-root .pf-ticker__link:hover {
+  background: color-mix(in oklab, var(--accent) 14%, transparent);
+  color: var(--fg);
+}
+#portfolio-root .pf-ticker__link:hover .pf-ticker__body { color: var(--fg); }
+#portfolio-root .pf-ticker__link:focus-visible {
+  outline: 1px solid var(--accent);
+  outline-offset: 2px;
+  background: color-mix(in oklab, var(--accent) 14%, transparent);
+}
 .pf-ticker__sep {
   color: color-mix(in oklab, var(--accent) 55%, transparent);
   font-size: 9px;

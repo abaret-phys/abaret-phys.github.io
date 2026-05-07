@@ -23,6 +23,59 @@
     initPublications();
     initScrollSpy();
     initNavMenu();
+    initAttention();
+  }
+
+  /* ═══════════════════════════════════════════════════════════
+     ATTENTION PULSES
+     - CV (PDF) button: subtle pulse a moment after load so a
+       new visitor's eye is drawn to it without it shouting.
+     - Venn-diagram toggle: pulses when the Research section
+       enters the viewport, so the collapsed diagram is
+       discoverable on first scroll. Fires once per session.
+     The CSS handles the actual animation; this just toggles
+     the .pf-attn class on/off.
+     ═══════════════════════════════════════════════════════════ */
+  function initAttention () {
+    const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (reduce) return;
+
+    // CV button — pulse shortly after load, release after a few cycles.
+    const cv = document.getElementById('pf-nav-cv');
+    if (cv) {
+      const arm = () => {
+        cv.classList.add('pf-attn');
+        // Cycles × duration in CSS = 4 × 1.8s = 7.2s; release at 7.5s.
+        setTimeout(() => cv.classList.remove('pf-attn'), 7500);
+      };
+      // Hold briefly so the page settles before the pulse begins.
+      setTimeout(arm, 900);
+      // Any user interaction kills the pulse early.
+      ['click', 'mouseenter', 'focus'].forEach(ev =>
+        cv.addEventListener(ev, () => cv.classList.remove('pf-attn'), { once: true })
+      );
+    }
+
+    // Venn toggle — pulse when the Research section comes into view.
+    const toggle = document.querySelector('.pf-venn__toggle');
+    const research = document.getElementById('research');
+    if (toggle && research && 'IntersectionObserver' in window) {
+      let fired = false;
+      const io = new IntersectionObserver(entries => {
+        entries.forEach(e => {
+          if (!fired && e.isIntersecting && e.intersectionRatio > 0.15) {
+            fired = true;
+            // Don't re-pulse a section the user has already opened.
+            if (toggle.open) { io.disconnect(); return; }
+            toggle.classList.add('pf-attn');
+            setTimeout(() => toggle.classList.remove('pf-attn'), 7500);
+            io.disconnect();
+          }
+        });
+      }, { threshold: [0.15, 0.3] });
+      io.observe(research);
+      toggle.addEventListener('toggle', () => toggle.classList.remove('pf-attn'), { once: true });
+    }
   }
 
   /* ═══════════════════════════════════════════════════════════

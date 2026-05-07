@@ -500,6 +500,29 @@ html:has(#portfolio-root[data-theme="light"]) ::-webkit-scrollbar-thumb { backgr
 }
 .pf-venn__summary em { font-style: italic; color: var(--accent); }
 
+/* Collapsible Venn — keeps the diagram available without dominating
+   the scroll for visitors who only want the prose summary. */
+.pf-venn__toggle { margin: 0.5rem 0 1rem; }
+.pf-venn__toggle > .pf-venn__toggle-sum {
+  display: inline-flex; align-items: center; gap: 0.5rem;
+  cursor: pointer; user-select: none;
+  padding: 0.5rem 0.85rem;
+  font-family: var(--serif); font-style: italic;
+  font-size: 14.5px;
+  color: color-mix(in oklab, var(--fg) 80%, transparent);
+  border: 1px solid color-mix(in oklab, var(--line) 70%, transparent);
+  border-left: 2px solid var(--accent);
+  border-radius: 2px;
+  background: color-mix(in oklab, var(--ink2) 35%, transparent);
+  list-style: none;
+  transition: color 0.2s, background 0.2s;
+}
+.pf-venn__toggle > .pf-venn__toggle-sum::-webkit-details-marker { display: none; }
+.pf-venn__toggle > .pf-venn__toggle-sum:hover { color: var(--fg); background: color-mix(in oklab, var(--ink2) 55%, transparent); }
+.pf-venn__toggle-chev { display: inline-block; transition: transform 0.2s; font-style: normal; color: var(--accent); }
+.pf-venn__toggle[open] > .pf-venn__toggle-sum .pf-venn__toggle-chev { transform: rotate(180deg); }
+.pf-venn__toggle[open] > .pf-venn__toggle-sum { margin-bottom: 1rem; }
+
 /* Collaborations callout — lives inside the Research section,
    styled as a first-class framed note with a research-blue
    left rule so it reads as research content, not a hero ad. */
@@ -840,7 +863,7 @@ html:has(#portfolio-root[data-theme="light"]) ::-webkit-scrollbar-thumb { backgr
 /* ── Awards ─────────────────────────────────────────────── */
 .pf-awards__cols { display: grid; grid-template-columns: 1fr; gap: 2.5rem; }
 @media (min-width: 1024px) { .pf-awards__cols { grid-template-columns: 1fr 1fr; } }
-.pf-awards__col-head { display: flex; align-items: center; gap: 0.75rem; margin-bottom: 0.75rem; color: var(--mute); font-size: 11px; }
+.pf-awards__col-head { display: flex; align-items: center; gap: 0.75rem; margin-bottom: 0.75rem; color: var(--mute); font-size: 13.5px; letter-spacing: 0.04em; }
 .pf-awards__col-head .pf-n { display: none; }
 .pf-award { display: grid; grid-template-columns: 2fr 10fr; gap: 0.75rem; padding-block: 1rem; }
 .pf-award__y    { font-size: 13px; color: var(--mute); padding-top: 2px; }
@@ -1219,3 +1242,139 @@ html:has(#portfolio-root[data-theme="light"]) ::-webkit-scrollbar-thumb { backgr
   .pf-nav__role { display: none; }
   .pf-hero__name { font-size: 38px; }
 }
+
+/* ── Announcements ticker ──────────────────────────────────
+   A thin strip below the hero. CSS-only marquee: the track
+   contains the news items duplicated once and is translated
+   from 0% to -50% so the seam is invisible. Pause on hover so
+   readers can finish a line.
+   ─────────────────────────────────────────────────────────── */
+.pf-ticker {
+  position: relative;
+  border-top:    1px solid var(--hairline);
+  border-bottom: 1px solid var(--hairline);
+  background: color-mix(in oklab, var(--ink2) 70%, transparent);
+  overflow: hidden;
+}
+.pf-ticker__row {
+  display: flex; align-items: stretch; gap: 0;
+  padding-block: 0.55rem;
+}
+.pf-ticker__label {
+  display: inline-flex; align-items: center; gap: 0.5rem;
+  flex: 0 0 auto;
+  padding-right: 0.9rem; margin-right: 0.9rem;
+  border-right: 1px solid var(--hairline);
+  font-size: 11px;
+  color: var(--accent);
+  letter-spacing: 0.12em;
+  white-space: nowrap;
+}
+.pf-ticker__dot {
+  display: inline-block;
+  width: 7px; height: 7px; border-radius: 50%;
+  background: var(--accent);
+  box-shadow: 0 0 0 0 color-mix(in oklab, var(--accent) 50%, transparent);
+  animation: pf-ticker-blink 2s ease-in-out infinite;
+}
+@keyframes pf-ticker-blink {
+  0%, 100% { opacity: 1;   box-shadow: 0 0 0 0   color-mix(in oklab, var(--accent) 60%, transparent); }
+  50%      { opacity: 0.55; box-shadow: 0 0 0 5px color-mix(in oklab, var(--accent) 0%,  transparent); }
+}
+.pf-ticker__viewport {
+  flex: 1 1 auto; min-width: 0;
+  overflow: hidden;
+  /* Soft fades on both ends so items dissolve in/out cleanly. */
+  -webkit-mask-image: linear-gradient(to right, transparent 0, #000 32px, #000 calc(100% - 32px), transparent 100%);
+          mask-image: linear-gradient(to right, transparent 0, #000 32px, #000 calc(100% - 32px), transparent 100%);
+}
+.pf-ticker__track {
+  display: inline-flex; align-items: center; gap: 1.25rem;
+  list-style: none; margin: 0; padding: 0;
+  white-space: nowrap;
+  animation: pf-ticker-scroll 60s linear infinite;
+  will-change: transform;
+}
+.pf-ticker:hover .pf-ticker__track,
+.pf-ticker__track:focus-within { animation-play-state: paused; }
+@keyframes pf-ticker-scroll {
+  from { transform: translateX(0); }
+  to   { transform: translateX(-50%); }
+}
+.pf-ticker__item {
+  display: inline-flex; align-items: baseline; gap: 0.6rem;
+  font-family: var(--serif);
+  font-size: 13.5px;
+  color: color-mix(in oklab, var(--fg) 85%, transparent);
+}
+.pf-ticker__date {
+  font-size: 10.5px;
+  color: var(--mute);
+  letter-spacing: 0.08em;
+}
+.pf-ticker__tag {
+  font-family: var(--mono);
+  font-size: 10.5px;
+  padding: 1px 6px;
+  border: 1px solid color-mix(in oklab, var(--accent) 45%, transparent);
+  border-radius: 2px;
+  color: var(--accent);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+.pf-ticker__body em { font-style: italic; color: var(--fg); }
+#portfolio-root .pf-ticker__body a {
+  color: var(--accent); text-decoration: none;
+  border-bottom: 1px solid color-mix(in oklab, var(--accent) 50%, transparent);
+}
+#portfolio-root .pf-ticker__body a:hover { color: var(--fg); }
+.pf-ticker__sep {
+  color: color-mix(in oklab, var(--accent) 55%, transparent);
+  font-size: 9px;
+}
+@media (prefers-reduced-motion: reduce) {
+  .pf-ticker__track { animation: none; }
+  .pf-ticker__dot   { animation: none; }
+}
+@media (max-width: 640px) {
+  .pf-ticker__label { font-size: 10px; padding-right: 0.6rem; margin-right: 0.6rem; }
+  .pf-ticker__item  { font-size: 12.5px; }
+}
+
+/* ── Attention pulses ──────────────────────────────────────
+   Two highlights:
+     - The CV (PDF) button on first paint, so visitors notice
+       it without scanning the whole nav.
+     - The Venn-diagram toggle when the research section
+       reaches the viewport, so it doesn't hide silently.
+   Both fade out after a few cycles, then fully release on
+   hover/focus to avoid distraction.
+   ─────────────────────────────────────────────────────────── */
+@keyframes pf-attn-pulse {
+  0%   { box-shadow: 0 0 0 0   color-mix(in oklab, var(--accent) 55%, transparent); border-color: color-mix(in oklab, var(--accent) 80%, transparent); }
+  60%  { box-shadow: 0 0 0 8px color-mix(in oklab, var(--accent) 0%,  transparent); border-color: color-mix(in oklab, var(--accent) 80%, transparent); }
+  100% { box-shadow: 0 0 0 0   color-mix(in oklab, var(--accent) 0%,  transparent); border-color: var(--line2); }
+}
+.pf-attn {
+  position: relative;
+  border-color: color-mix(in oklab, var(--accent) 80%, transparent) !important;
+  color: var(--fg) !important;
+  background: color-mix(in oklab, var(--accent) 10%, transparent) !important;
+  animation: pf-attn-pulse 1.8s ease-out 4;
+}
+.pf-attn:hover, .pf-attn:focus { animation: none; }
+
+/* Variant for the Venn toggle — same idea but tuned to the
+   summary's italic-serif look. */
+.pf-venn__toggle.pf-attn {
+  animation: none;
+  background: transparent !important;
+}
+.pf-venn__toggle.pf-attn > .pf-venn__toggle-sum {
+  border-color: color-mix(in oklab, var(--accent) 80%, transparent);
+  background: color-mix(in oklab, var(--accent) 10%, transparent);
+  color: var(--fg);
+  animation: pf-attn-pulse 1.8s ease-out 4;
+}
+.pf-venn__toggle.pf-attn > .pf-venn__toggle-sum:hover { animation: none; }
+

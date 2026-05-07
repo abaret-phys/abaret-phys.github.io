@@ -1323,6 +1323,8 @@ html:has(#portfolio-root[data-theme="light"]) ::-webkit-scrollbar-thumb { backgr
   font-size: 10.5px;
   color: var(--mute);
   letter-spacing: 0.08em;
+  margin-right: 0.6rem;
+  flex: 0 0 auto;
 }
 .pf-ticker__tag {
   font-family: var(--mono);
@@ -1333,7 +1335,10 @@ html:has(#portfolio-root[data-theme="light"]) ::-webkit-scrollbar-thumb { backgr
   color: var(--accent);
   text-transform: uppercase;
   letter-spacing: 0.06em;
+  margin-right: 0.6rem;
+  flex: 0 0 auto;
 }
+.pf-ticker__body { flex: 0 1 auto; }
 .pf-ticker__body em { font-style: italic; color: var(--fg); }
 #portfolio-root .pf-ticker__link {
   display: inline-flex; align-items: baseline; gap: 0.6rem;

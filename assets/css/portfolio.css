@@ -563,6 +563,8 @@ html:has(#portfolio-root[data-theme="light"]) ::-webkit-scrollbar-thumb { backgr
 }
 .pf-collab__p em     { font-style: italic; }
 .pf-collab__p strong { color: var(--research); font-weight: 500; }
+/* Second and later paragraphs need their own leading, since the base rule zeroes margins. */
+.pf-collab__p + .pf-collab__p { margin-top: 0.7rem; }
 
 .pf-venn__legend {
   display: flex; flex-wrap: wrap; align-items: center; gap: 0.5rem;

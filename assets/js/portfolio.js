@@ -372,6 +372,12 @@
   // Ordered from most recent to oldest.
   const PUBS = [
     { y: 2026,
+      authors: ['A. Baret', 'N. D. Nguyen'],
+      title: 'Emissivity by design: geometric mesh inductance governs thermal radiation in metallic nanowire networks',
+      venue: 'arXiv preprint', volume: '2608.17061',
+      topics: ['low-E', 'optics', 'nanowires'],
+      doi: '10.48550/arXiv.2608.17061' },
+    { y: 2026,
       authors: ['A. Baret', 'A. Khan', 'S. Akin', 'L. Teulé-Gay', 'D. Bellet', 'A. Rougier', 'N. D. Nguyen'],
       title: 'Challenges and mitigation pathways in coating silver nanowire networks with metallic oxides by magnetron sputtering',
       venue: 'Langmuir', volume: 'in press',
